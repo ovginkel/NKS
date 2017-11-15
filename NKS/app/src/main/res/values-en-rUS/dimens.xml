@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progress_bar_height">160dp</dimen>
+    <dimen name="progress_bar_width">160dp</dimen>
+
+    <!-- drawer -->
+    <dimen name="drawer_header_height">135dp</dimen>
+    <dimen name="drawer_header_profile">96dp</dimen>
+    <dimen name="drawer_header_profile_name">18sp</dimen> <!-- sp for text dp for others -->
+    <dimen name="channel_header_text">16sp</dimen>
+    <dimen name="im_header_text">16sp</dimen>
+    <dimen name="item_chanel_text">14sp</dimen>
+
+    <!-- user item -->
+    <dimen name="item_user_card_view_name">18sp</dimen>
+    <dimen name="item_user_card_view_phone">16sp</dimen>
+    <dimen name="abc_text_size_body_1_material_nonpriv">10sp</dimen>
+    <dimen name="item_user_card_view_profile">48dp</dimen>
+    <dimen name="bicon_bar_width">200dp</dimen>
+    <dimen name="bicon_bar_height">200dp</dimen>
+</resources>

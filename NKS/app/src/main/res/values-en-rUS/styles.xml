@@ -1,0 +1,61 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="PrimaryText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/abc_text_size_body_1_material_nonpriv</item>
+    </style>
+
+    <style name="SecondaryText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">@dimen/abc_text_size_body_1_material_nonpriv</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorProgressDialogCircle</item>
+        <item name="android:textColorPrimary">@color/colorProgressDialogText</item>
+        <item name="android:background">@color/colorProgressDialogBackground</item>
+    </style>
+
+    <style name="AppActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="titleTextStyle">@style/AppActionBarTitle</item>
+    </style>
+
+    <style name="AppActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
+    <style name="AppActionBarOverlay" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/abc_primary_text</item>
+        <item name="android:textColorPrimaryInverse">@color/abc_primary_text_inverse</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/abc_primary_text_disable_only</item>
+        <item name="android:textColorSecondary">@color/abc_secondary_text</item>
+        <item name="android:textColorSecondaryInverse">@color/abc_secondary_text_inverse</item>
+        <item name="android:textColorTertiary">@color/abc_secondary_tertiary</item>
+        <item name="android:textColorTertiaryInverse">@color/abc_secondary_tertiary_inverse</item>
+        <item name="android:textColorHint">@color/abc_text_color_hint</item>
+        <!--<item name="android:textColorHintInverse">@color/abc_hint_foreground_material_light</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_material_dark</item>
+
+        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
+        <item name="colorControlHighlight">@color/ripple_material_dark</item>
+        <item name="colorButtonNormal">@color/button_material_dark</item>
+        <item name="colorSwitchThumbNormal">@color/switch_thumb_material_dark</item>-->
+    </style>
+
+    <style name="AppPopupTheme.ActionBarOverlay" parent="AppActionBarOverlay">
+        <item name="android:windowBackground">@color/colorAbcPopupPrimaryDark</item>
+        <item name="android:colorForeground">@color/colorAbcPopupPrimary</item>
+        <item name="android:colorForegroundInverse">@color/colorAbcPopupPrimary</item>
+        <item name="android:colorBackground">@color/colorAbcPopupPrimaryDark</item>
+        <item name="android:colorBackgroundCacheHint">@color/colorAbcPopupPrimaryDark</item>
+        <item name="colorBackgroundFloating">@color/colorPrimaryText</item>
+    </style>
+
+</resources>

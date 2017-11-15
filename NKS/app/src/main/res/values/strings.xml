@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">NKS</string>
+
+    
+    <string name="channels">KANALE</string>
+    <string name="ims">KITS BOODSKAPPE</string>
+    <string name="all_users">ALLE GEBRUIKERS</string>
+    
+    <string name="log_out">Teken uit</string>
+    <string name="exit">Verlaat</string>
+    <string name="action_search_users">Soek&#8230;</string>
+    
+    <string name="private_channel">Private kanaal</string>
+    <string name="add_contact">Voeg by</string>
+    <string name="phone_call">Foonoproep</string>
+    <string name="profile_image">Profielprent</string>
+    <string name="view_profile">Besigtig profiel</string>
+    <string name="channel_message">Kanaal boodskap</string>
+    <string name="im_message">Kitsboodskap</string>
+    <string name="team_name">spannaam</string>
+
+    <string name="ok">Ja</string>
+    <string name="no">Nee</string>
+
+    <string name="drawer_open">oop</string>
+    <string name="drawer_close">toe</string>
+    <string name="all_users_title">Alle gebruikers</string>
+    <string name="send_message">Stuur boodskap</string>
+    <string name="action_refresh">Verfris boodskappe</string>
+    <string name="progress_dialog_wait">Wag asb&#8230;</string>
+
+    <string name="dialog_log_out_title">Teken uit</string>
+    <string name="dialog_exit_title">Verlaat</string>
+    <string name="dialog_exit_message">Is jy klaar?</string>
+    <string name="dialog_log_out_message">Is jy seker?</string>
+
+    <string name="add_im">Aktiveer kitsboodskappe</string>
+    <string name="upload_photo">Laai foto</string>
+    <string name="upload_file">Laai dokument</string>
+    <string name="dialog_confirm_upload">Bevestig oplaai</string>
+    <string name="log_in">Teken in</string>
+    <string name="dialog_log_in_title">Gaan na intekenblad</string>
+    <string name="dialog_log_in_message">Verseker dat spannaam en intekenbesonderhede beskikbaar is</string>
+    <string name="team">Span</string>
+    <string name="activate_messaging_with">Aktiveer boodskappe met</string>
+    <string name="allow_reading_external">Gee toegang op eksterne geheue?</string>
+    <string name="file_selection_for_upload">Selekteer dokument om op te laai…</string>
+    <string name="image_selection_for_upload">Selekteer beeld om op te laai…</string>
+    <string name="confirm_upload">Bevestig oplaai</string>
+    <string name="messages_received">boodskappe ontvang</string>
+    <string name="nks_got">NKS het</string>
+    <string name="multi_new_messages">nuwe boodskappe ontvang</string>
+    <string name="single_new_message">\'n nuwe boodskap ontvang</string>
+    <string name="message">Boodskap</string>
+    <string name="send">Stuur</string>
+    <string name="cancel">Kanseleer</string>
+    <string name="do_continue">Goed</string>
+    <string name="cancel_login">Kanseleer inteken</string>
+    <string name="activated_refresh">Verfrissing aktief</string>
+    <string name="deactivated_refresh">Verfrissing onaktief</string>
+    <string name="background_icon">Agtergrond Ikoon</string>
+    <string name="empty_user">Naamloos</string>
+    <string name="file_upload_success">Suksesvolle oplaai</string>
+    <string name="file_upload_failure">Oplaaifout</string>
+    <string name="tried">Het probeer maar kon nie</string>
+</resources>

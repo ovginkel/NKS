@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4C3A4A</color>
+    <color name="colorPrimaryDark">#3C2E3B</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorSecondaryText">#BBB7B8</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorProgressDialogCircle">#4C3A4A</color>
+    <color name="colorProgressDialogText">#212121</color>
+    <color name="colorProgressDialogBackground">#FFFFFF</color>
+    <color name="colorAbcPopupPrimaryDark">#594758</color>
+    <color name="colorAbcPopupPrimary">#7f637c</color>
+
+    <color name="colorUserCard">#CFD8DC</color>
+    <color name="colorUserCardName">#000000</color>
+</resources>
