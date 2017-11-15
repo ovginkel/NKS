@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">NKS</string>
+
+    
+    <string name="channels">CHANNELS</string>
+    <string name="ims">IMS</string>
+    <string name="all_users">ALL USERS</string>
+    
+    <string name="log_out">Log out</string>
+    <string name="exit">Exit</string>
+    <string name="action_search_users">Search&#8230;</string>
+    
+    <string name="private_channel">Private Channel</string>
+    <string name="add_contact">Add</string>
+    <string name="phone_call">Phone Call</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="view_profile">View Profile</string>
+    <string name="channel_message">Channel Message</string>
+    <string name="im_message">IM Message</string>
+    <string name="team_name">teamname</string>
+
+    <string name="ok">OK</string>
+    <string name="no">NO</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="all_users_title">All users</string>
+    <string name="send_message">Send Message</string>
+    <string name="action_refresh">Refresh Messages</string>
+    <string name="progress_dialog_wait">Please wait&#8230;</string>
+
+    <string name="dialog_log_out_title">Log out</string>
+    <string name="dialog_exit_title">Exit</string>
+    <string name="dialog_exit_message">Are you done?</string>
+    <string name="dialog_log_out_message">Are you sure?</string>
+
+    <string name="add_im">Activate Instant Messaging</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="upload_file">Upload File</string>
+    <string name="dialog_confirm_upload">Confirm upload</string>
+    <string name="log_in">Log in</string>
+    <string name="dialog_log_in_title">Go to login</string>
+    <string name="dialog_log_in_message">Ensure team name and access credentials are available</string>
+    <string name="team">Team</string>
+    <string name="activate_messaging_with">Activate instant messaging with</string>
+    <string name="allow_reading_external">Allow reading external storage?</string>
+    <string name="file_selection_for_upload">File selection for upload…</string>
+    <string name="image_selection_for_upload">Image selection for upload…</string>
+    <string name="confirm_upload">Confirm upload</string>
+    <string name="messages_received">messages received</string>
+    <string name="nks_got">NKS got</string>
+    <string name="multi_new_messages">new messages</string>
+    <string name="single_new_message">a new message</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="do_continue">Continue</string>
+    <string name="cancel_login">Cancel login</string>
+    <string name="activated_refresh">Activated refreshing</string>
+    <string name="deactivated_refresh">Deactivated refreshing</string>
+    <string name="background_icon">Background Icon</string>
+    <string name="empty_user">Nameless</string>
+    <string name="file_upload_success">Successful upload</string>
+    <string name="file_upload_failure">Upload failure</string>
+    <string name="tried">Tried but could not</string>
+</resources>

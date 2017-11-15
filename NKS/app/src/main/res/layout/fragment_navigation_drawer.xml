@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="9dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_header_height"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="@dimen/drawer_header_profile"
+            android:layout_height="@dimen/drawer_header_profile"
+            android:src="@drawable/default_profile"
+            android:contentDescription="@string/profile_image"/> <!-- de.hdodenhof.circleimageview.CircleImageView -->
+
+        <TextView
+            android:id="@+id/profile_name"
+            style="@style/PrimaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:textSize="@dimen/drawer_header_profile_name" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewAllUsers"
+        style="@style/SecondaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:paddingTop="9dp"
+        android:text="@string/all_users"
+        android:textSize="@dimen/channel_header_text" />
+
+    <TextView
+        style="@style/SecondaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewChannelsRecycler"
+        android:text="@string/channels"
+        android:textSize="@dimen/channel_header_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorPrimaryDark" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        style="@style/SecondaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewImsRecycler"
+        android:text="@string/ims"
+        android:textSize="@dimen/im_header_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorPrimaryDark" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewIM"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>    <!-- android:background="@color/colorPrimary" -->
