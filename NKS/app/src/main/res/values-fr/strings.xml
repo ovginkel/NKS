@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">NKS</string>
+
+    
+    <string name="channels">CHAÎNES</string>
+    <string name="ims">MESSAGES INSTANTANÉS</string>
+    <string name="all_users">TOUS LES UTILISATEURS</string>
+    
+    <string name="log_out">Déconnexion</string>
+    <string name="exit">Sortie</string>
+    <string name="action_search_users">Chercher...</string>
+    
+    <string name="private_channel">Chaîne privée</string>
+    <string name="add_contact">Ajouter</string>
+    <string name="phone_call">Appel téléphonique</string>
+    <string name="profile_image">Photo de profil</string>
+    <string name="view_profile">Voir le profil</string>
+    <string name="channel_message">Message de la chaîne</string>
+    <string name="im_message">Message instantané</string>
+    <string name="team_name">nom de l\'équipe</string>
+
+    <string name="ok">Oui</string>
+    <string name="no">Non</string>
+
+    <string name="drawer_open">ouvrir</string>
+    <string name="drawer_close">fermer</string>
+    <string name="all_users_title">Tout les utilisateurs</string>
+    <string name="send_message">Envoyer le message</string>
+    <string name="action_refresh">Actualiser les messages</string>
+    <string name="progress_dialog_wait">S\'il vous plaît, attendez...</string>
+
+    <string name="dialog_log_out_title">Déconnexion</string>
+    <string name="dialog_exit_title">Sortie</string>
+    <string name="dialog_exit_message">As tu fini?</string>
+    <string name="dialog_log_out_message">Êtes-vous sûr</string>
+
+    <string name="add_im">Activer la messagerie instananée</string>
+    <string name="upload_photo">Envoyer la photo</string>
+    <string name="upload_file">Téléverser un ficher</string>
+    <string name="dialog_confirm_upload">Confirmer le téléchargement</string>
+    <string name="log_in">Se connecter</string>
+    <string name="dialog_log_in_title">Aller à la page de connexion</string>
+    <string name="dialog_log_in_message">Assurez-vous que le nom de l\'équipe et les informations de connexion sont disponibles</string>
+    <string name="team">Équipe</string>
+    <string name="activate_messaging_with">Activer les messages avec</string>
+    <string name="allow_reading_external">Autoriser l\'accès à la mèmoire externe</string>
+    <string name="file_selection_for_upload">Sélectionnez le document á télécharger</string>
+    <string name="image_selection_for_upload">Sélectionnez l\'image à télécharger...</string>
+    <string name="confirm_upload">Confirmer le téléchargement</string>
+    <string name="messages_received">messages reçus</string>
+    <string name="nks_got">NKS a</string>
+    <string name="multi_new_messages">nouveaux messages reçus</string>
+    <string name="single_new_message">un nouveaux message</string>
+    <string name="message">Message</string>
+    <string name="send">Envoyer</string>
+    <string name="cancel">Annuler</string>
+    <string name="do_continue">D\'accord</string>
+    <string name="cancel_login">Annuler Connexion</string>
+    <string name="activated_refresh">Refraîchissant actif</string>
+    <string name="deactivated_refresh">Refraîchissant inactif</string>
+    <string name="background_icon">Icône de fond</string>
+    <string name="empty_user">Sans nom</string>
+    <string name="file_upload_success">Télécharger le succês</string>
+    <string name="file_upload_failure">Erreur de téléchargement</string>
+    <string name="tried">Essayé mais ne pouvait pas</string>
+</resources>
