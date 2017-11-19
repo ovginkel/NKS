@@ -8,8 +8,6 @@ import com.jakewharton.picasso.OkHttp3Downloader;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -32,10 +30,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     OkHttpClient provideOkhttpClient(Application application) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(600, TimeUnit.SECONDS) //Allow for slow uploads
-                .readTimeout(200, TimeUnit.SECONDS); //Allow for slow downloads
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         /*if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
