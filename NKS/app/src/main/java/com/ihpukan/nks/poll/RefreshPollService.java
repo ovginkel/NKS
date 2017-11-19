@@ -1,17 +1,32 @@
 package com.ihpukan.nks.poll;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
 import android.os.Message;
 
 import com.ihpukan.nks.service.AbstractService;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * Created by vGinkeO on 2017/08/25.
+ */
+
+/*
+public class RefreshPollService extends IntentService {
+   public OnRefreshAlarmListener alarmListener;
+   public RefreshPollService() {
+       super("RefreshPollService");
+   }
+
+    @Override
+    protected void onHandleIntent(Intent intent)
+    {
+        Log.d("RefreshPollService", "About to execute MyTask");
+        //alarmListener.onRefreshMessageAlarm();
+    }
+
+}*/
 
 public class RefreshPollService extends AbstractService {
     public static final int MSG_RATE = 1;
@@ -19,13 +34,8 @@ public class RefreshPollService extends AbstractService {
     public static final int UPDATE_MESSAGES = 0;
     public static final int NOTIFY_MESSAGES = 1;
 
-    //private Timer timer = new Timer();
-    //private long rate = 120000L;
-    private static final long REPEAT_TIME = 1000 * 60;
-
-    private RefreshAlarmServiceReceiver br;
-
-    private Handler handler = new Handler();
+    private Timer timer = new Timer();
+    private long rate = 120000L;
 
     public RefreshPollService() {
         super("RefreshPollService");//"AbstractService"
@@ -33,85 +43,85 @@ public class RefreshPollService extends AbstractService {
 
     @Override
     public void onStartService() {
+        // Increment counter and send to activity every 250ms
+        /*timer.scheduleAtFixedRate(new TimerTask(){
+            public void run() {
+                try {
+                    counter += incrementby;
+                    send(Message.obtain(null, MSG_COUNTER, counter, 0));
+                }
+                catch (Throwable t) { }
+            }, 0L, 250L);
+        }*/
 
-        setRecurringAlarm(getApplicationContext());
-    }
-
-    private void cancelRecurringAlarm(Context context)
-    {
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent("com.ihpukan.nks"), PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-        if(br!=null){
-            unregisterReceiver(br);
-            br = null;
-        }
-    }
-
-    private void setRecurringAlarm(Context context) {
-
-        Calendar updateTime = Calendar.getInstance();
-        updateTime.setTimeZone(TimeZone.getDefault());
-        updateTime.set(Calendar.HOUR_OF_DAY, 12);
-        updateTime.set(Calendar.MINUTE, 30);
-
-        br = new RefreshAlarmServiceReceiver() {
-
-            @Override
-            public void onReceive(Context c, Intent i) {
-
-                onRefreshMessageAlarm();
-
+        timer.schedule( /*AtFixedRate heaps up...*/
+                new TimerTask(){
+            public void run() {
+                try {
+                    //Update messages
+                    send(Message.obtain(null, MSG_DO, UPDATE_MESSAGES, 0));
+                } catch (Throwable t) {
+                }
             }
+            }, 1000L, rate );
 
-        };
-
-        registerReceiver(br, new IntentFilter("com.ihpukan.nks") );
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent("com.ihpukan.nks"), PendingIntent.FLAG_CANCEL_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), REPEAT_TIME , pendingIntent); //
-
-        //Log.d("MyActivity", "Set alarmManager.setRepeating to: " + updateTime.getTime().toString());
-
-    }
-
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            try{
-                send(Message.obtain(null, MSG_DO, NOTIFY_MESSAGES, 0));
-            }
-            catch(Exception e){
-                // added try catch block to be sure of uninterupted execution
-            }
-      /* and here comes the "trick" */
-            //handler.postDelayed(this, 5000);
-        }
-    };
-
-    public void onRefreshMessageAlarm() {
-        send(Message.obtain(null, MSG_DO, UPDATE_MESSAGES, 0));
-        handler.postDelayed(runnable, 8000); //Notify 8 seconds later
+        timer.schedule( /*AtFixedRate heaps up...*/
+                new TimerTask(){
+                    public void run() {
+                        try {
+                            //Notify of new messages
+                            send(Message.obtain(null, MSG_DO, NOTIFY_MESSAGES, 0));
+                        } catch (Throwable t) {
+                        }
+                    }
+                }, 1000L, rate/6 );
     }
 
     @Override
     protected void onHandleIntent(Intent intent)
     {
+        //Log.d("RefreshPollService", "About to execute MyTask");
+        //send(Message.obtain(null, MSG_COUNTER, counter, 0));
+        //alarmListener.onRefreshMessageAlarm();
     }
 
     @Override
     public void onStopService() {
-        //if (timer != null) {timer.cancel();}
-        cancelRecurringAlarm(getApplicationContext());
+        if (timer != null) {timer.cancel();}
         //counter = 0;
     }
 
     @Override
     public void onReceiveMessage(Message msg) {
-        /*if (msg.what == MSG_RATE) {
-        }*/
+        if (msg.what == MSG_RATE) {
+            if(msg.arg1>10000L && msg.arg1<1800000)
+            {
+                rate = msg.arg1;
+
+                timer.cancel();
+
+                timer.schedule( /*AtFixedRate heaps up...*/
+                        new TimerTask(){
+                            public void run() {
+                                try {
+                                    //Update messages
+                                    send(Message.obtain(null, MSG_DO, UPDATE_MESSAGES, 0));
+                                } catch (Throwable t) {
+                                }
+                            }
+                        }, 1000L, rate );
+
+                timer.schedule( /*AtFixedRate heaps up...*/
+                        new TimerTask(){
+                            public void run() {
+                                try {
+                                    //Notify of new messages
+                                    send(Message.obtain(null, MSG_DO, NOTIFY_MESSAGES, 0));
+                                } catch (Throwable t) {
+                                }
+                            }
+                        }, 1000L, rate/6 );
+            }
+        }
     }
 }

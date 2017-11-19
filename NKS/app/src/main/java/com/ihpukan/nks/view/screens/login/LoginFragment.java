@@ -70,11 +70,13 @@ public class LoginFragment extends AbstractBaseFragment implements LoginContract
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (loginPresenter.needLogin()) {
-            //First ask for team name then grab token after online login
-            getTeam();
-        } else {
-            successLogin();
+        if(loginPresenter!=null) {
+            if (loginPresenter.needLogin()) {
+                //First ask for team name then grab token after online login
+                getTeam();
+            } else {
+                successLogin();
+            }
         }
     }
 
