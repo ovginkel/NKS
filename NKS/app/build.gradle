@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
 
     defaultConfig {
         applicationId "com.ihpukan.nks"
         minSdkVersion 16
-        maxSdkVersion 25
-        targetSdkVersion 25
-        versionCode 3
-        versionName "1.1"
+        maxSdkVersion 27
+        targetSdkVersion 27
+        versionCode 4
+        versionName "1.2"
     }
 
     signingConfigs {
@@ -48,13 +48,13 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //support libraries
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile ('com.android.support:recyclerview-v7:25.3.1'){
+    compile 'com.android.support:appcompat-v7:27.0.1'
+    compile 'com.android.support:design:27.0.1'
+    compile ('com.android.support:recyclerview-v7:27.0.1'){
         exclude group: 'com.android.support:support-v4'
     }
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:cardview-v7:27.0.1'
+    compile 'com.android.support:support-v4:27.0.1'
     //http transport libraries
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.google.code.gson:gson:2.8.0'
