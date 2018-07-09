@@ -207,7 +207,7 @@ public class LoginFragment extends AbstractBaseFragment implements LoginContract
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            if(url.contains("/home")||url.contains("/messages"))
+            if(url.contains("/home")||url.contains("/messages")||url.contains("/app"))
             {
                 if(!myJSTI.token.equals(""))
                 {
@@ -215,7 +215,8 @@ public class LoginFragment extends AbstractBaseFragment implements LoginContract
                     return;
                 }
                 else {
-                    view.loadUrl("javascript:window.INTERFACE.processContent(boot_data.ms_connect_url);");
+                    view.loadUrl("javascript:window.INTERFACE.processContent(boot_data.api_token);"); //New token store
+                    view.loadUrl("javascript:window.INTERFACE.processContent(boot_data.ms_connect_url);"); //Old token store
                     view.loadUrl(String.format(Constants.LOGIN_URL,teamName)+"/home");
                     return;
                 }
