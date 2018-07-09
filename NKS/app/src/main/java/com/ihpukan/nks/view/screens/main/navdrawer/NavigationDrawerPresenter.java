@@ -1,11 +1,16 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
+import android.app.Activity;
+import android.widget.Toast;
+
+import com.ihpukan.nks.R;
 import com.ihpukan.nks.common.PreferenceManager;
+import com.ihpukan.nks.model.Channel;
+import com.ihpukan.nks.model.ChannelJoin;
 import com.ihpukan.nks.model.ChannelWrapper;
 import com.ihpukan.nks.model.GroupsWrapper;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.module.network.RestApiInterface;
-import com.ihpukan.nks.view.screens.main.navdrawer.NavigationDrawerContract;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,6 +48,28 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
         retrofit.getGroups(preferenceManager.getToken()).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(groupsLoadObserver);
     }
+
+    private Observer<ChannelJoin> channelJoinObserver = new Observer<ChannelJoin>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(ChannelJoin channelJoin) {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            viewNavDrawer.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
 
     private Observer<User> profileLoadObserver = new Observer<User>() {
         @Override
@@ -109,4 +136,32 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
 
         }
     };
+
+    public void joinChannel(final Activity activity, final Channel channel) {
+        //
+        retrofit.joinChannel(preferenceManager.getToken(),channel.id).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ChannelJoin>() {
+            @Override
+            public void onSubscribe(Disposable d)
+            {
+            }
+
+            @Override
+            public void onNext(ChannelJoin channelJoin)
+            {
+                Toast.makeText(activity, R.string.channel_activated, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e)
+            {
+                viewNavDrawer.showErrorMessage(e.getMessage());
+            }
+
+            @Override
+            public void onComplete()
+            {
+            }
+        });
+    }
 }

@@ -63,4 +63,6 @@
     <string name="file_upload_success">Télécharger le succês</string>
     <string name="file_upload_failure">Erreur de téléchargement</string>
     <string name="tried">Essayé mais ne pouvait pas</string>
+    <string name="im_activated">Message Instantané Actif</string>
+    <string name="channel_activated">Canal Actif</string>
 </resources>

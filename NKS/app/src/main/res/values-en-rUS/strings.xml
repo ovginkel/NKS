@@ -63,4 +63,6 @@
     <string name="file_upload_success">Successful upload</string>
     <string name="file_upload_failure">Upload failure</string>
     <string name="tried">Tried but could not</string>
+    <string name="im_activated">IM Activated</string>
+    <string name="channel_activated">Channel Activated</string>
 </resources>

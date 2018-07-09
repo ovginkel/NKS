@@ -63,4 +63,6 @@
     <string name="file_upload_success">Suksesvolle oplaai</string>
     <string name="file_upload_failure">Oplaaifout</string>
     <string name="tried">Het probeer maar kon nie</string>
+    <string name="im_activated">Kitsboodskappe Geaktiveer</string>
+    <string name="channel_activated">Kanaal Geaktiveer</string>
 </resources>
