@@ -67,7 +67,7 @@ public interface RestApiInterface {
     Observable<OpenIMWrapper> openIM(@Field("token") String token,
                                      @Field("user") String user);
 
-
+    @FormUrlEncoded
     @POST("conversations.join")
     Observable<ChannelJoin> joinChannel(@Field("token") String token,
                                         @Field("channel") String channel);

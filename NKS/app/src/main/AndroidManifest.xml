@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ihpukan.nks"
-    android:versionCode="6"
-    android:versionName="1.6">
+    android:versionCode="7"
+    android:versionName="1.7">
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" android:maxSdkVersion="27" />
     <uses-permission android:name="android.permission.INTERNET" />
