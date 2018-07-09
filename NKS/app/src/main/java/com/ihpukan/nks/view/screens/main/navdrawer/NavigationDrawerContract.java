@@ -1,5 +1,7 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
+import android.app.Activity;
+
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.view.base.AbstractBaseView;
@@ -16,6 +18,8 @@ public interface NavigationDrawerContract {
 
         void loadChannelsComplete(List<Channel> channels);
 
+        /*void onJoinChannel(final Channel channel);*/
+
         void loadGroupsComplete(List<Channel> channels);
 
     }
@@ -25,6 +29,8 @@ public interface NavigationDrawerContract {
         void loadProfile();
 
         void loadChannels();
+
+        void joinChannel(final Activity activity, final Channel channel);
 
         void loadGroups();
 

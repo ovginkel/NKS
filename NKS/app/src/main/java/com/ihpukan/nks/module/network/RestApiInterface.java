@@ -1,5 +1,6 @@
 package com.ihpukan.nks.module.network;
 
+import com.ihpukan.nks.model.ChannelJoin;
 import com.ihpukan.nks.model.ChannelWrapper;
 import com.ihpukan.nks.model.EmojiWrapper;
 import com.ihpukan.nks.model.GroupsWrapper;
@@ -66,6 +67,10 @@ public interface RestApiInterface {
     Observable<OpenIMWrapper> openIM(@Field("token") String token,
                                      @Field("user") String user);
 
+
+    @POST("conversations.join")
+    Observable<ChannelJoin> joinChannel(@Field("token") String token,
+                                        @Field("channel") String channel);
     @FormUrlEncoded
     @POST("emoji.list")
     Observable<EmojiWrapper> getAllEmojiList(@Field("token") String token);

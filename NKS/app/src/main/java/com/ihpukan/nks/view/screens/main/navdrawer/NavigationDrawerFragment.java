@@ -1,7 +1,9 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -107,6 +109,11 @@ public class NavigationDrawerFragment extends AbstractBaseFragment implements Na
         adapter.addChannels(channels);
         navigationDrawerPresenter.loadGroups();
     }
+
+   /* @Override
+    public void onJoinChannel(final Channel channel) {
+        navigationDrawerPresenter.joinChannel(getActivity(),channel);
+    }*/
 
     @Override
     public void loadGroupsComplete(List<Channel> channels) {

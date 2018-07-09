@@ -58,6 +58,7 @@ public class UsersPresenter implements UsersContract.Presenter {
         if (channel.name.equals(Channel.ALL_USERS_CHANNEL)) {
             loadUsers(activity);
         } else {
+
             loadUsers(activity, channel.members);
         }
     }
@@ -131,7 +132,7 @@ public class UsersPresenter implements UsersContract.Presenter {
 
             @Override
             public void onNext(OpenIMWrapper imWrapper) {
-                Toast.makeText(activity, "IM Activated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.im_activated, Toast.LENGTH_SHORT).show();
             }
 
             @Override
