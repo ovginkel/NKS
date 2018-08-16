@@ -7,15 +7,20 @@ import com.ihpukan.nks.R;
 import com.ihpukan.nks.common.PreferenceManager;
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.ChannelJoin;
+import com.ihpukan.nks.model.ChannelList;
 import com.ihpukan.nks.model.ChannelWrapper;
 import com.ihpukan.nks.model.GroupsWrapper;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.module.network.RestApiInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.internal.Collection;
 import retrofit2.Retrofit;
 
 public class NavigationDrawerPresenter implements NavigationDrawerContract.Presenter {
@@ -101,7 +106,22 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
 
         @Override
         public void onNext(ChannelWrapper channelWrapper) {
-            viewNavDrawer.loadChannelsComplete(channelWrapper.channels);
+            ChannelWrapper nonArchived = new ChannelWrapper();
+            nonArchived.channels = new ArrayList<>();
+            if(channelWrapper.channels!=null) {
+                int channelCount = channelWrapper.channels.size();
+
+                for (int ci = 0; ci < channelCount; ci++) {
+                    Channel ciChan = new Channel((Channel) channelWrapper.channels.toArray()[ci]);
+                    //List<Channel> cList;
+                    //cList = new ArrayList<>();
+
+                    if ((ciChan.is_archived) == false) {
+                        nonArchived.channels.add(new Channel(ciChan));
+                    }
+                }
+            }
+            viewNavDrawer.loadChannelsComplete(nonArchived.channels);
         }
 
         @Override
@@ -123,7 +143,21 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
 
         @Override
         public void onNext(GroupsWrapper groupsWrapper) {
-            viewNavDrawer.loadGroupsComplete(groupsWrapper.groups);
+            GroupsWrapper nonArchived = new GroupsWrapper();
+            int channelCount = groupsWrapper.groups.size();
+            nonArchived.groups = new ArrayList<>();
+            for(int ci = 0; ci<channelCount; ci++)
+            {
+                Channel ciChan = new Channel((Channel)groupsWrapper.groups.toArray()[ci]);
+                //List<Channel> cList;
+                //cList = new ArrayList<>();
+
+                if((ciChan.is_archived) == false)
+                {
+                    nonArchived.groups.add(new Channel(ciChan));
+                }
+            }
+            viewNavDrawer.loadGroupsComplete(nonArchived.groups);
         }
 
         @Override
@@ -149,7 +183,7 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
             @Override
             public void onNext(ChannelJoin channelJoin)
             {
-                Toast.makeText(activity, R.string.channel_activated, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, R.string.channel_activated, Toast.LENGTH_SHORT).show();
             }
 
             @Override
