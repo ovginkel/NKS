@@ -53,13 +53,20 @@
                     android:layout_marginTop="6dp"
                     android:textSize="@dimen/item_user_card_view_phone"
                     tools:text="+380960011252 +380960011252 +380960011252 +380960011252 +380960011252" />
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textSize="@dimen/item_user_card_view_phone"
+                    tools:text="alfred@tee.zoom" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageViewOpenIm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/new_message_icon"
+                android:src="@drawable/em1053"
                 android:contentDescription="@string/add_im" />
 
         </LinearLayout>
