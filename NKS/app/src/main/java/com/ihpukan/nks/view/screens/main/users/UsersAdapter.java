@@ -44,8 +44,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         final User user = users.get(position);
         holder.textViewName.setText(user.profile.real_name);
         holder.textViewPhone.setText(user.profile.phone);
+        holder.textViewEmail.setText(user.profile.email);
 
         Linkify.addLinks( holder.textViewPhone, Linkify.PHONE_NUMBERS );
+        Linkify.addLinks( holder.textViewEmail, Linkify.EMAIL_ADDRESSES );
 
         holder.imageViewOpenIm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +93,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         TextView textViewName;
         @BindView(R.id.phone)
         TextView textViewPhone;
+        @BindView(R.id.email)
+        TextView textViewEmail;
         @BindView(R.id.imageViewProfile) //R.id.imageViewProfile
         ImageView imageViewProfile;
         @BindView(R.id.imageViewOpenIm)
