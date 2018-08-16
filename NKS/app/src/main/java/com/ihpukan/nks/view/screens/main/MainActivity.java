@@ -465,7 +465,9 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             NavigationHelper.addFragment(getSupportFragmentManager(), mainFragment, R.id.main_container);
         }
         mainPresenter.onChannelClick(this, channel);
-        navigationDrawerPresenter.joinChannel(this,channel);
+        if(!channel.equals(channel.ALL_USERS_CHANNEL)) {
+            navigationDrawerPresenter.joinChannel(this, channel);
+        }
         mainPresenterActive = true;
     }
 	
