@@ -22,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     private String baseUrl;
-
     public NetworkModule(String baseUrl) {
         this.baseUrl = baseUrl;
     }
@@ -36,6 +35,8 @@ public class NetworkModule {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(httpLoggingInterceptor);
         }*/
+        httpClient.retryOnConnectionFailure(true);
+        httpClient.connectTimeout(2, java.util.concurrent.TimeUnit.MINUTES);
         OkHttpClient client = httpClient.build();
         OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(client);
         Picasso picasso = new Picasso.Builder(application)
