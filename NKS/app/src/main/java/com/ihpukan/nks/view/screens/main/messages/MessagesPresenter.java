@@ -404,33 +404,37 @@ public class MessagesPresenter implements MessagesContract.Presenter {
 
     private void linkUsersToMessages(MembersWrapper membersWrapper)
     {
-        for (int i = 0; i < membersWrapper.members.size(); i++) {
-            if(messageCache != null)
+        if(membersWrapper != null?(membersWrapper.members != null):false)
+        {
+            for (int i = 0; i < membersWrapper.members.size(); i++)
             {
-                for(int j = 0; j < messageCache.size(); j++)
+                if(messageCache != null)
                 {
-                    if(messageCache.get(idMessages.get(j))!=null)
+                    for(int j = 0; j < messageCache.size(); j++)
                     {
-                        if(messageCache.get(idMessages.get(j)).user!=null)
+                        if(messageCache.get(idMessages.get(j))!=null)
                         {
-                            if(messageCache.get(idMessages.get(j)).member==null) {
-                                if (messageCache.get(idMessages.get(j)).user.equalsIgnoreCase(membersWrapper.members.get(i).id)) {
-                                    if
-                                            (
-                                            (membersWrapper.members.get(i).profile != null) ?
-                                                    (
-                                                            (membersWrapper.members.get(i).profile.email != null) ?
-                                                                    membersWrapper.members.get(i).profile.email.equalsIgnoreCase(myUserMail)
-                                                                    : false
-                                                    )
-                                                    : false
-                                            ) //Subtract messages user has sent
-                                    {
-                                        if(numberOfNewMessages>0){numberOfNewMessages--;}
+                            if(messageCache.get(idMessages.get(j)).user!=null)
+                            {
+                                if(messageCache.get(idMessages.get(j)).member==null) {
+                                    if (messageCache.get(idMessages.get(j)).user.equalsIgnoreCase(membersWrapper.members.get(i).id)) {
+                                        if
+                                                (
+                                                (membersWrapper.members.get(i).profile != null) ?
+                                                        (
+                                                                (membersWrapper.members.get(i).profile.email != null) ?
+                                                                        membersWrapper.members.get(i).profile.email.equalsIgnoreCase(myUserMail)
+                                                                        : false
+                                                        )
+                                                        : false
+                                                ) //Subtract messages user has sent
+                                        {
+                                            if(numberOfNewMessages>0){numberOfNewMessages--;}
+                                        }
+                                        Message message = messageCache.get(idMessages.get(j));
+                                        message.member = membersWrapper.members.get(i);
+                                        messageCache.put(idMessages.get(j), message);
                                     }
-                                    Message message = messageCache.get(idMessages.get(j));
-                                    message.member = membersWrapper.members.get(i);
-                                    messageCache.put(idMessages.get(j), message);
                                 }
                             }
                         }
