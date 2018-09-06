@@ -1,5 +1,7 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     private List<Message> messages;
     private OnSendClickListener clickListener;
     private MembersWrapper myMembersWrapper;
+    private Context myContext;
 
     public MessagesAdapter(OnSendClickListener clickListener) {
         this(null, null, clickListener);
@@ -59,6 +62,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     @Override
     public MessagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        myContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_message_view, parent, false);
         return new MessagesAdapter.ViewHolder(view);
@@ -185,6 +189,45 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 mNR = pNR.matcher(TextAll); //Update
             }
 
+        }
+
+        ///Handle everyone references
+        String myPatternER = "\\<!([A-Za-z0-9\\_]*)\\>"; //".*?FILES_SECTION.*?\n(.*?)\n.*?FILES_SECTION.*?";
+        Pattern pER = Pattern.compile(myPatternER);
+        Matcher mER = pER.matcher(TextAll);
+        int replaceCounterER = 0;
+        //String specialNameER = "";
+        while(mER.find()) {
+            Boolean isReplaced = false;
+
+            if (mER.group(1) != null ? mER.group(1).length() > 0 : false) {
+                String replaceNameER = mER.group(1).substring(0, 1).toUpperCase() + (mER.group(1).length() > 1 ? mER.group(1).substring(1, mER.group(1).length()).toLowerCase() : "");
+                if(replaceNameER.toLowerCase().equals("everyone"))
+                {
+                    if(myContext != null) {
+                        replaceNameER = myContext.getString(R.string.everyone);
+                    }
+                }
+                TextAll = TextAll.replaceFirst(myPatternER, replaceNameER);
+                mER = pER.matcher(TextAll);
+                //if (replaceCounterER == 0) {
+                //    specialNameER = replaceNameER;
+                //}
+                replaceCounterER++;
+                isReplaced = true;
+            }
+
+            if (!isReplaced)
+            {
+                String replaceNameER = '!' + (mER.group(1) != null ? mER.group(1) : "");
+                TextAll = TextAll.replaceFirst(myPatternER, replaceNameER);
+                //if(replaceCounter==0)
+                //{
+                //    specialNameER = replaceNameER;
+                //}
+                replaceCounterER++;
+                mER = pER.matcher(TextAll); //Update
+            }
         }
 
         if(message.subtype!=null?message.subtype.equalsIgnoreCase("file_comment"):false) //Handle special case with no user attributed directly (only in message)
