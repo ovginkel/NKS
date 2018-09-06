@@ -136,6 +136,8 @@ public class LookupCheatSheet {
         emojiResourceID.put("metal",R.drawable.metal);
         emojiResourceID.put("fu",R.drawable.fu);
         emojiResourceID.put("runner",R.drawable.runner);
+        emojiResourceID.put("man-running",R.drawable.running);
+        emojiResourceID.put("man_running",R.drawable.running);
         emojiResourceID.put("running",R.drawable.running);
         emojiResourceID.put("couple",R.drawable.couple);
         emojiResourceID.put("family",R.drawable.family);

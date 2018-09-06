@@ -103,6 +103,8 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
 
     boolean refreshIsActive = false;
 
+    boolean searchIsActive = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -427,6 +429,11 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
         if (drawerLayout.isDrawerOpen(drawerContainer)) {
             drawerLayout.closeDrawer(drawerContainer);
         } else {
+            if(searchIsActive)
+            {
+                messagePresenter.endSearchMessage();
+                searchIsActive = false;
+            }
             super.onBackPressed();
         }
     }
@@ -510,11 +517,21 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
 
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
+        if(messagePresenterActive && searchIsActive) {
+                //if(refreshIsActive){service.stop();refreshIsActive = false;}
+                searchIsActive = false;
+                messagePresenter.endSearchMessage();
+            }
         return true;
     }
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
+        if(messagePresenterActive && searchIsActive) {
+                //if(refreshIsActive){service.stop();refreshIsActive = false;}
+            searchIsActive = false;
+            messagePresenter.endSearchMessage();
+        }
         return true;
     }
 
@@ -525,7 +542,15 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             mainPresenter.searchUser(query.trim());
         }else if(messagePresenterActive) {
             //if(refreshIsActive){service.stop();refreshIsActive = false;}
-            messagePresenter.searchMessage(query.trim());
+            if(query.trim().length()<1 && searchIsActive==true)
+            {
+                searchIsActive = false;
+                messagePresenter.endSearchMessage();
+            }
+            else if(query.trim().length()>0) {
+                searchIsActive = true;
+                messagePresenter.searchMessage(query.trim());
+            }
         }
         return true;
     }
@@ -537,7 +562,15 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
         }else if(messagePresenterActive)
         {
             //if(refreshIsActive){service.stop();refreshIsActive = false;}
-            messagePresenter.searchMessage(newText.trim());
+            if(newText.length()<1 && searchIsActive==true)
+            {
+                searchIsActive = false;
+                messagePresenter.endSearchMessage();
+            }
+            else if(newText.length()>0) {
+                searchIsActive = true;
+                messagePresenter.searchMessage(newText.trim());
+            }
         }
         return true;
     }
@@ -551,10 +584,19 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             else if(messagePresenterActive)
             {
                 //if(refreshIsActive){service.stop();refreshIsActive = false;}
-                messagePresenter.searchMessage(v.getText().toString().trim());
+                if(v.getText().toString().trim().length()<1 && searchIsActive==true)
+                {
+                    searchIsActive = false;
+                    messagePresenter.endSearchMessage();
+                }
+                else if(v.getText().toString().trim().length()>0) {
+                    searchIsActive = true;
+                    messagePresenter.searchMessage(v.getText().toString().trim());
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

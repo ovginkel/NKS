@@ -1509,6 +1509,7 @@ public class LookupLocal {
         emojiResourceID.put("man_running_type_4",R.drawable.em1458);
         emojiResourceID.put("man_running_type_5",R.drawable.em1459);
         emojiResourceID.put("man_running_type_6",R.drawable.em1460);
+        emojiResourceID.put("man-running",R.drawable.em1461);
         emojiResourceID.put("man_running",R.drawable.em1461);
         emojiResourceID.put("man_shrugging_type_1_2",R.drawable.em1462);
         emojiResourceID.put("man_shrugging_type_3",R.drawable.em1463);
@@ -1516,6 +1517,7 @@ public class LookupLocal {
         emojiResourceID.put("man_shrugging_type_5",R.drawable.em1465);
         emojiResourceID.put("man_shrugging_type_6",R.drawable.em1466);
         emojiResourceID.put("man_shrugging",R.drawable.em1467);
+        emojiResourceID.put("man-shrugging",R.drawable.em1467);
         emojiResourceID.put("man_surfing_type_1_2",R.drawable.em1468);
         emojiResourceID.put("man_surfing_type_3",R.drawable.em1469);
         emojiResourceID.put("man_surfing_type_4",R.drawable.em1470);

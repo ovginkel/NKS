@@ -2186,6 +2186,8 @@ public class Lookup {
         emojiUrl.put("rubberduck", "http://emojis.slackmojis.com/emojis/images/1498668177/2504/rubberduck.png?1498668177");
         emojiUrl.put("rubberduck", "http://emojis.slackmojis.com/emojis/images/1478177932/1322/rubberduck.gif?1478177932");
         emojiUrl.put("rubiks_cube", "http://emojis.slackmojis.com/emojis/images/1470343195/708/rubiks_cube.png?1470343195");
+        emojiUrl.put("man_running", "http://emojis.slackmojis.com/emojis/images/1498862138/2548/runningman.gif?1498862138");
+        emojiUrl.put("man-running", "http://emojis.slackmojis.com/emojis/images/1498862138/2548/runningman.gif?1498862138");
         emojiUrl.put("runningman", "http://emojis.slackmojis.com/emojis/images/1498862138/2548/runningman.gif?1498862138");
         emojiUrl.put("runthecomps", "http://emojis.slackmojis.com/emojis/images/1503104316/2809/runthecomps.png?1503104316");
         emojiUrl.put("s1", "http://emojis.slackmojis.com/emojis/images/1502309190/2758/s1.png?1502309190");
@@ -2264,6 +2266,7 @@ public class Lookup {
         emojiUrl.put("shrug", "http://emojis.slackmojis.com/emojis/images/1498599755/2499/shrug.gif?1498599755");
         emojiUrl.put("shrug", "http://emojis.slackmojis.com/emojis/images/1491823067/2017/shrug.png?1491823067");
         emojiUrl.put("shrug", "http://emojis.slackmojis.com/emojis/images/1475154942/1191/shrug.jpg?1475154942");
+        emojiUrl.put("man-shrugging", "http://emojis.slackmojis.com/emojis/images/1499760126/2615/shrug-boy.png?1499760126");
         emojiUrl.put("shrug-boy", "http://emojis.slackmojis.com/emojis/images/1499760126/2615/shrug-boy.png?1499760126");
         emojiUrl.put("shwing", "http://emojis.slackmojis.com/emojis/images/1475846110/1217/shwing.gif?1475846110");
         emojiUrl.put("sick", "http://emojis.slackmojis.com/emojis/images/1483822851/1602/sick.gif?1483822851");

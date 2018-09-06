@@ -4,9 +4,14 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ihpukan.nks.common.PreferenceManager;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
+
+import java.net.InetSocketAddress;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 
 import javax.inject.Singleton;
 
@@ -22,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     private String baseUrl;
+    private PreferenceManager preferenceManager;
     public NetworkModule(String baseUrl) {
         this.baseUrl = baseUrl;
     }

@@ -24,7 +24,10 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.internal.Collection;
 import retrofit2.Retrofit;
+
+import static com.ihpukan.nks.model.Channel.ALL_USERS_CHANNEL;
 
 public class UsersPresenter implements UsersContract.Presenter {
 
@@ -33,6 +36,7 @@ public class UsersPresenter implements UsersContract.Presenter {
     private PreferenceManager preferenceManager;
     private LruCache<String, User> usersCache;
     private List<User> currentUsers = new ArrayList<>();
+    private List<User> allUsers = new ArrayList<>();
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<String> idUsers = new ArrayList<>();
     private String queryUser = "";
@@ -49,13 +53,13 @@ public class UsersPresenter implements UsersContract.Presenter {
         currentChannel = channel;
         //currentActivity = activity;
 
-        if (channel.name.equals(Channel.ALL_USERS_CHANNEL)) {
+        if (channel.name.equals(ALL_USERS_CHANNEL)) {
             activity.getSupportActionBar().setTitle(R.string.all_users_title);
         } else {
             activity.getSupportActionBar().setTitle(channel.name);
         }
 
-        if (channel.name.equals(Channel.ALL_USERS_CHANNEL)) {
+        if (channel.name.equals(ALL_USERS_CHANNEL)) {
             loadUsers(activity);
         } else {
 
@@ -91,6 +95,17 @@ public class UsersPresenter implements UsersContract.Presenter {
                     if (user != null) {
                         currentUsers.add(user);
                     }
+                    else //not in cache
+                    {
+                        for (java.util.Iterator<User> i = allUsers.iterator(); i.hasNext();) {
+                            User usr = i.next();
+                            if(user.id == id)
+                            {
+                                currentUsers.add(usr);
+                                usersCache.put(usr.id,usr);
+                            }
+                        }
+                    }
                 }
                 sortUsers(currentUsers);
             }
@@ -109,16 +124,24 @@ public class UsersPresenter implements UsersContract.Presenter {
         });
     }
 
-    private void loadUsers(Activity activity) {
+    private void loadUsers(Activity activity) { //OvG: Not functioning properly
         queryUser = "";
         if (usersCache == null) return;
         viewMain.showProgressBar();
         currentUsers = new ArrayList<>(usersCache.size());
         currentUsers.addAll(usersCache.snapshot().values());
+        allUsers = new ArrayList<>();
+        allUsers.addAll(currentUsers);
         sortUsers(currentUsers);
         viewMain.hideProgressBar();
         viewMain.hideBackIcon();
-        viewMain.displayUsers(currentUsers);
+        //viewMain.displayUsers(currentUsers);
+        idUsers.clear();
+        for (java.util.Iterator<User> i = allUsers.iterator(); i.hasNext();) { //Required for user load fix
+            User usr = i.next();
+            idUsers.add(usr.id);
+        }
+        this.loadUsers(activity, idUsers); //Required for user load fix
     }
 
     public void openIM(final Activity activity, final String userid) {
@@ -202,6 +225,10 @@ public class UsersPresenter implements UsersContract.Presenter {
             if(membersWrapper!=null?(membersWrapper.members!=null?membersWrapper.members.size()>0:false):false) {
                 usersCache = new LruCache<>(membersWrapper.members.size());
                 idUsers = new ArrayList<>();
+                currentUsers.clear();
+                if(currentChannel != null?(currentChannel.members == null):false) {
+                    currentChannel.members = new ArrayList<String>();
+                }
                 for (int i = 0; i < membersWrapper.members.size(); i++) {
                     User user = membersWrapper.members.get(i);
 
@@ -209,10 +236,22 @@ public class UsersPresenter implements UsersContract.Presenter {
                         if (currentChannel.members.contains(user.id)) {
                             usersCache.put(user.id, user);
                             idUsers.add(user.id);
+                            currentUsers.add(user);
+                        }
+                        else if(currentChannel.name.equals(ALL_USERS_CHANNEL))
+                        {
+                            usersCache.put(user.id, user);
+                            idUsers.add(user.id);
+                            currentUsers.add(user);
                         }
                     } else {
+                        if(currentChannel != null)
+                        {
+                            currentChannel.members.add(user.id);
+                        }
                         usersCache.put(user.id, user);
                         idUsers.add(user.id);
+                        currentUsers.add(user);
                     }
                 }
             }
@@ -229,6 +268,11 @@ public class UsersPresenter implements UsersContract.Presenter {
 
         @Override
         public void onComplete() {
+            /*if(currentUsers.size()>0)
+            {
+                sortUsers(currentUsers);
+                viewMain.displayUsers(currentUsers);
+            }*/
             viewMain.hideProgressBar(); viewMain.hideBackIcon();
         }
     };

@@ -118,15 +118,15 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
     }
 
     @Override
-    public void displayMessages(List<Message> messages) {
+    public void displayMessages(List<Message> mmessages) {
         hideProgressBar();
         hideBackIcon();
         //messagesAdapter.clearMessages();
-        if (messages == null || messages.isEmpty()) {
+        if (mmessages == null || mmessages.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.not_found_messages, Toast.LENGTH_SHORT).show();
             messagesAdapter.addMessages(new ArrayList<Message>(),presenter.getMembersWrapper());
         } else {
-            messagesAdapter.addMessages(messages,presenter.getMembersWrapper());
+            messagesAdapter.addMessages(mmessages,presenter.getMembersWrapper());
         }
     }
 

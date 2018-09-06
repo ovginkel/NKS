@@ -76,6 +76,8 @@ public class LookupLocalNakuphi {
         emojiResourceID.put("glitch_crab",R.drawable.glitch_crab_n);
         emojiResourceID.put("squirrel",R.drawable.squirrel_n);
         emojiResourceID.put("bowtie",R.drawable.bowtie_n);
+        emojiResourceID.put("duiker",R.drawable.duiker_n);
+        emojiResourceID.put("snorkel",R.drawable.snorkel_n);
         //Aliases
         emojiResourceID.put("seilkuns",LookupLocal.emojiResourceID.get("boat"));
         emojiResourceID.put("vars-water-kunde",LookupLocal.emojiResourceID.get("droplet"));
