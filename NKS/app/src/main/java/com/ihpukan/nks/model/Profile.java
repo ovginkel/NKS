@@ -21,7 +21,7 @@ public class Profile extends AbstractErrorModel {
 
     @Override
     public String toString() {
-        return real_name + " " + email;
+        return real_name + " " + (email!=null?email:"");
     }
 
 }

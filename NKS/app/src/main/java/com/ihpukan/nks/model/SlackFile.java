@@ -32,7 +32,23 @@ public class SlackFile {
     public String thumb_480; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_480.png",
     public Integer thumb_480_w; //480,
     public Integer thumb_480_h; //480,
+    public String thumb_720; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_720.png",
+    public Integer thumb_720_w; //480,
+    public Integer thumb_720_h; //480,
+    public String thumb_800; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_720.png",
+    public Integer thumb_800_w; //480,
+    public Integer thumb_800_h; //480,
+    public String thumb_960; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_720.png",
+    public Integer thumb_960_w; //480,
+    public Integer thumb_960_h; //480,
+    public String thumb_1024; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_720.png",
+    public Integer thumb_1024_w; //480,
+    public Integer thumb_1024_h; //480,
     public String thumb_160; //"https:\/\/slack-files.com\/files-tmb\/T024BE7LD-F024BERPE-c66246\/1_160.png",
+    public Integer image_exif_rotation;
+    public Integer original_w;
+    public Integer original_h;
+    public Boolean upload;
     public String permalink; //"https:\/\/tinyspeck.slack.com\/files\/cal\/F024BERPE\/1.png",
     public String permalink_public; //" : "https:\/\/tinyspeck.slack.com\/T024BE7LD-F024BERPE-3f9216b62c",
     public String edit_link; //"https:\/\/tinyspeck.slack.com\/files\/cal\/F024BERPE\/1.png/edit",

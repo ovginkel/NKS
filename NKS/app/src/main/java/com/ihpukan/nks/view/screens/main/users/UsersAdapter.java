@@ -12,6 +12,7 @@ import com.ihpukan.nks.R;
 import com.ihpukan.nks.model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +29,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     public UsersAdapter(List<User> users, OnOpenIMClickListener clickIMListener) {
         this.clickIMListener = clickIMListener;
-        addUsers(users);
+        if(users != null) //Seemed to fixed user load problem
+        {
+            addUsers(users);
+        }
+        else
+        {
+
+        }
     }
 
     @Override
@@ -64,14 +72,23 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     }
 
-    public void addUsers(List<User> users) {
-        if (this.users != null) {
+    public void addUsers(List<User> musers) {
+        if ((this.users != null)?(musers!=null):false) {
             this.users.clear();
-            this.users.addAll(users);
+            this.users.addAll(musers);
         } else {
-            this.users = users;
+            if(musers!=null) {
+                this.users = new ArrayList<User>(musers.size());
+                this.users.addAll(musers);
+            }
+            else
+            {
+                this.users = new ArrayList<User>();
+            }
         }
-        this.notifyDataSetChanged();
+        if(this.users != null ?musers!=null:false) {
+            this.notifyDataSetChanged();
+        }
     }
 
     public void clearUsers() {
@@ -79,8 +96,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             this.notifyDataSetChanged();
             return;
         }
-        users.clear();
-        this.notifyDataSetChanged();
+        else
+        {
+            users.clear();
+            this.notifyDataSetChanged();
+        }
     }
 
     @Override

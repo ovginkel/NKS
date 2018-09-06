@@ -45,6 +45,8 @@ public interface MessagesContract {
 
         void searchMessage(String query);
 
+        void endSearchMessage();
+
         void uploadFile(Activity activity, String filePath);
 
         MembersWrapper getMembersWrapper();

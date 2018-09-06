@@ -18,6 +18,7 @@ import com.ihpukan.nks.model.MembersWrapper;
 import com.ihpukan.nks.model.Message;
 import com.ihpukan.nks.model.MessagesWrapper;
 import com.ihpukan.nks.model.PublicMessageResponse;
+import com.ihpukan.nks.model.SlackFile;
 import com.ihpukan.nks.model.UploadResponse;
 import com.ihpukan.nks.module.network.RestApiInterface;
 
@@ -46,6 +47,7 @@ public class MessagesPresenter implements MessagesContract.Presenter {
     private LruCache<String, Message> messageCache;
     private List<String> idMessages = new ArrayList<>();
     private List<Message> currentMessages = new ArrayList<>();
+    private List<Message> currentMessagesBU = new ArrayList<>();
     private String queryMessage = "";
     public Channel currentChannel;
     public IM currentIM;
@@ -75,7 +77,7 @@ public class MessagesPresenter implements MessagesContract.Presenter {
         {
             activity.getSupportActionBar().setTitle(" ");
         }
-        if(Lookup.emojiUrl.size()<=2446) //Append team specific emojis to online lookup list
+        if(Lookup.emojiUrl.size()<=/*2446*/2449) //Append team specific emojis to online lookup list
         {
             retrofit.getAllEmojiList(this.preferenceManager.getToken()).subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe(emojiLoadObserver);
@@ -149,6 +151,8 @@ public class MessagesPresenter implements MessagesContract.Presenter {
         queryMessage = "";
         if (messageCache == null) return;
         if (idMessages == null || idMessages.isEmpty()) {
+            currentMessagesBU.clear();
+            currentMessagesBU.addAll(currentMessages);
             viewMain.displayMessages(null);
             return;
         }
@@ -239,6 +243,22 @@ public class MessagesPresenter implements MessagesContract.Presenter {
     }
 
     @Override
+    public void endSearchMessage() {
+        if(currentMessages.size()<currentMessagesBU.size())
+        {
+            currentMessages.clear();
+            currentMessages.addAll(currentMessagesBU);
+            if(currentMessagesBU.size()<currentMessages.size())
+            {
+                currentMessagesBU.clear();
+                currentMessagesBU.addAll(currentMessages);
+            }
+        }
+        viewMain.displayMessages(currentMessages);
+
+    }
+
+    @Override
     public void searchMessage(final String query) {
         if (queryMessage.equals(query)) return;
         queryMessage = query;
@@ -256,18 +276,42 @@ public class MessagesPresenter implements MessagesContract.Presenter {
                         }
                     }
                 }
+                if(message.text == null && message.files != null)
+                {
+                    for (SlackFile slackfile: message.files)
+                    {
+                        if(slackfile.title != null) {
+                            return slackfile.title.toUpperCase().contains(query.toUpperCase());
+                        }
+                        else if(slackfile.name != null) {
+                            return slackfile.name.toUpperCase().contains(query.toUpperCase());
+                        }
+                    }
+                }
                 return message.text.toUpperCase().contains(query.toUpperCase());
             }
         };
         List<Message> searchResult = new ArrayList<>();
         if (!TextUtils.isEmpty(query)) {
+            if(currentMessages.size()<currentMessagesBU.size())
+            {
+                currentMessages.clear();
+                currentMessages.addAll(currentMessagesBU);
+            }
             for (Message message : currentMessages) {
                 if (matcher.matches(message)) {
                     searchResult.add(message);
                 }
             }
+            currentMessagesBU.clear();
+            currentMessagesBU.addAll(currentMessages);
             viewMain.displayMessages(searchResult);
         } else {
+            if(currentMessages.size()<currentMessagesBU.size())
+            {
+                currentMessages.clear();
+                currentMessages.addAll(currentMessagesBU);
+            }
             viewMain.displayMessages(currentMessages);
         }
     }

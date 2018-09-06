@@ -37,7 +37,7 @@ public class UsersFragment extends AbstractBaseFragment implements UsersContract
 
 
     private UsersContract.Presenter presenter;
-    private UsersAdapter usersAdapter;
+    public UsersAdapter usersAdapter;
     private ProgressDialog progressDialog;
 
     @Nullable
@@ -60,8 +60,9 @@ public class UsersFragment extends AbstractBaseFragment implements UsersContract
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //usersAdapter.clearUsers();
         presenter.loadAllUsers();
-        usersAdapter.clearUsers();
+
     }
 
     @Override
@@ -96,13 +97,18 @@ public class UsersFragment extends AbstractBaseFragment implements UsersContract
     }
 
     @Override
-    public void displayUsers(List<User> users) {
+    public void displayUsers(List<User> musers) {
         hideProgressBar();
-        if (users == null || users.isEmpty()) {
+        if (musers == null || musers.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.not_found_users, Toast.LENGTH_SHORT).show();
             usersAdapter.addUsers(new ArrayList<User>());
+            updateViews();
         } else {
-            usersAdapter.addUsers(users);
+            if((musers!=null)?(!musers.isEmpty()):false)
+            {
+                usersAdapter.addUsers(musers);
+                updateViews();
+            }
         }
     }
 

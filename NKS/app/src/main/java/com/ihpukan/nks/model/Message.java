@@ -12,6 +12,7 @@ public class Message {
     public String username;
     public SlackIcon icons;
     public List<Attachment> attachments;
+    public List<SlackFile> files;
     public User member;
 
     public String subtype;

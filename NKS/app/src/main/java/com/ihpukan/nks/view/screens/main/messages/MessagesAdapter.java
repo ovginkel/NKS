@@ -28,6 +28,9 @@ import com.ihpukan.nks.emoji.LookupLocalNakuphi;
 import com.ihpukan.nks.model.Attachment;
 import com.ihpukan.nks.model.MembersWrapper;
 import com.ihpukan.nks.model.Message;
+import com.ihpukan.nks.model.Profile;
+import com.ihpukan.nks.model.SlackFile;
+import com.ihpukan.nks.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,9 +52,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         this(null, null, clickListener);
     }
 
-    public MessagesAdapter(List<Message> messages, MembersWrapper users, OnSendClickListener clickListener) {
+    public MessagesAdapter(List<Message> mmessages, MembersWrapper users, OnSendClickListener clickListener) {
         this.clickListener = clickListener;
-        addMessages(messages,users);
+        addMessages(mmessages,users);
     }
 
     @Override
@@ -88,6 +91,34 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 }
             }
             //holder.messageText.setText(TextAll);
+        }
+
+        if(message.files != null)
+        {
+            //TextAll = "";
+            for (SlackFile slackfile: message.files) {
+                if(slackfile.url_private_download != null)
+                {
+                    TextAll += (!TextAll.contains(slackfile.url_private_download))?((TextAll.length()>0?"\n":"")+(slackfile.name!=null?((!slackfile.url_private_download.contains(slackfile.name))?slackfile.name+"\n":""):"")+slackfile.url_private_download):"";
+                }
+                else if(slackfile.url_private != null)
+                {
+                    TextAll += (!TextAll.contains(slackfile.url_private))?((TextAll.length()>0?"\n":"")+(slackfile.name!=null?((!slackfile.url_private.contains(slackfile.name))?slackfile.name+"\n":""):"")+slackfile.url_private):"";
+                }
+            }
+            //holder.messageText.setText(TextAll);
+        }
+
+        if(message.bot_id != null?message.bot_id!="":false)
+        {
+            User botuser = new User();
+            botuser.id = message.bot_id;
+            botuser.name = message.bot_id;
+            botuser.profile = new Profile();
+            botuser.profile.real_name = "Bot ("+message.bot_id+")";
+            myMembersWrapper.members.add(botuser);
+            message.member = botuser;
+
         }
 
         ///Handle name references
@@ -391,31 +422,66 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             targets.add(inTextEmoji);
 
             //Load from local resource set 0
-            Integer resid = LookupLocalNakuphi.emojiResourceID.get(m.group(0).substring(1, m.group(0).length() - 1));
+            String findMoji = m.group(0).substring(1, m.group(0).length() - 1);
+
+            Integer resid = LookupLocalNakuphi.emojiResourceID.get(findMoji);
             if (resid != null) {
                 Picasso.with(holder.messageText.getContext())
                         .load(resid)
                         .into(inTextEmoji);
             } else {
                 //Load from local resource set 1
-                resid = LookupCheatSheet.emojiResourceID.get(m.group(0).substring(1, m.group(0).length() - 1));
+                resid = LookupCheatSheet.emojiResourceID.get(findMoji);
                 if (resid != null) {
                     Picasso.with(holder.messageText.getContext())
                             .load(resid)
                             .into(inTextEmoji);
                 } else {
                     //Load from local resource set 2
-                    resid = LookupLocal.emojiResourceID.get(m.group(0).substring(1, m.group(0).length() - 1));
+                    resid = LookupLocal.emojiResourceID.get(findMoji);
                     if (resid != null) {
                         Picasso.with(holder.messageText.getContext())
                                 .load(resid)
                                 .into(inTextEmoji);
-                    } else { //Load from online lookup or custom team emoji urls
-                        String url = Lookup.emojiUrl.get(m.group(0).substring(1, m.group(0).length() - 1));
-                        if (url != null) {
+                    } else { //First try hyphen then try loading from online lookup or custom team emoji urls
+                        String findMojihyphen = findMoji.replaceAll("-","_");
+                        resid = LookupLocalNakuphi.emojiResourceID.get(findMojihyphen);
+
+                        if (resid != null) {
                             Picasso.with(holder.messageText.getContext())
-                                    .load(url)
+                                    .load(resid)
                                     .into(inTextEmoji);
+                        } else {
+                            //Load from local resource set 1
+                            resid = LookupCheatSheet.emojiResourceID.get(findMojihyphen);
+                            if (resid != null) {
+                                Picasso.with(holder.messageText.getContext())
+                                        .load(resid)
+                                        .into(inTextEmoji);
+                            } else {
+                                //Load from local resource set 2
+                                resid = LookupLocal.emojiResourceID.get(findMojihyphen);
+                                if (resid != null) {
+                                    Picasso.with(holder.messageText.getContext())
+                                            .load(resid)
+                                            .into(inTextEmoji);
+                                } else { //Load from online lookup or custom team emoji urls
+                                    String url = Lookup.emojiUrl.get(findMojihyphen);
+                                    if (url != null) {
+                                        Picasso.with(holder.messageText.getContext())
+                                                .load(url)
+                                                .into(inTextEmoji);
+                                    }
+                                    else {
+                                       url = Lookup.emojiUrl.get(findMoji);
+                                        if (url != null) {
+                                            Picasso.with(holder.messageText.getContext())
+                                                    .load(url)
+                                                    .into(inTextEmoji);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -433,22 +499,39 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
         else if(message.member != null)
         {
-            Picasso.with(holder.itemView.getContext()).
-                    load(message.member.profile.image_48).
-                    into(holder.imageViewMessageProfile);
+            if((message.member.profile != null)?(message.member.profile.image_48!=null):false) {
+                Picasso.with(holder.itemView.getContext()).
+                        load(message.member.profile.image_48).
+                        into(holder.imageViewMessageProfile);
+            }
+            else
+            {
+                holder.imageViewMessageProfile.setImageResource(R.drawable.default_profile);
+            }
+        }
+        else
+        {
+            holder.imageViewMessageProfile.setImageResource(R.drawable.default_profile);
         }
 
     }
 
-    public void addMessages(List<Message> messages, MembersWrapper users) {
+    public void addMessages(List<Message> mmessages, MembersWrapper musers) {
         if (this.messages != null) {
             this.messages.clear();
-            this.messages.addAll(messages);
+            this.messages.addAll(mmessages);
         } else {
-            this.messages = messages;
+            if(mmessages != null) {
+                this.messages = new ArrayList<>(mmessages.size());
+                this.messages.addAll(mmessages);
+            }
+            else
+            {
+                this.messages = new ArrayList<Message>();
+            }
         }
-        if(users!=null) {
-            this.myMembersWrapper = users;
+        if(musers!=null) {
+            this.myMembersWrapper = musers;
         }
         notifyDataSetChanged();
     }
