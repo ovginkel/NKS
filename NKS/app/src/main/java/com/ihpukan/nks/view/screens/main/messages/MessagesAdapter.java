@@ -1,6 +1,5 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -31,6 +30,7 @@ import com.ihpukan.nks.model.Attachment;
 import com.ihpukan.nks.model.MembersWrapper;
 import com.ihpukan.nks.model.Message;
 import com.ihpukan.nks.model.Profile;
+import com.ihpukan.nks.model.SlackAction;
 import com.ihpukan.nks.model.SlackFile;
 import com.ihpukan.nks.model.User;
 import com.squareup.picasso.Picasso;
@@ -81,17 +81,51 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             TextAll = message.text;
         }
 
+        if(TextAll.contains("has a poll for you"))
+        {
+            TextAll = TextAll.replaceAll("has a poll for you",myContext.getString(R.string.has_a_poll_for_you));
+        }
+
         if(message.attachments != null)
         {
             //TextAll = "";
             for (Attachment attachment: message.attachments) {
-                if(attachment.text != null)
+                if(attachment.fallback != null)
+                {
+                    TextAll += (!TextAll.contains(attachment.fallback))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.fallback.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.fallback):"";
+                } else if(attachment.text != null)
                 {
                     TextAll += (!TextAll.contains(attachment.text))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.text.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.text):"";
                 }
-                else if(attachment.fallback != null)
+
+                if(attachment.actions != null)
                 {
-                    TextAll += (!TextAll.contains(attachment.fallback))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.fallback.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.fallback):"";
+                    TextAll += "\n";
+                    int actCount = attachment.actions.toArray().length;
+                    int counter = 0;
+                    for(SlackAction act: attachment.actions)
+                    {
+                        counter += 1;
+                        String showAction = (act.text!=null)?act.text:"";
+                        if(showAction.toLowerCase().equals("add a comment"))
+                        {
+                            showAction = myContext.getString(R.string.add_a_comment);
+                        }
+                        else if(showAction.toLowerCase().equals("yes")||showAction.toLowerCase().equals("ja")||showAction.toLowerCase().equals("oui"))
+                        {
+                            showAction = myContext.getString(R.string.ok);
+                        }
+                        else if(showAction.toLowerCase().equals("no")||showAction.toLowerCase().equals("nee")||showAction.toLowerCase().equals("non"))
+                        {
+                            showAction = myContext.getString(R.string.no);
+                        }
+                        if(counter<actCount) {
+                            TextAll += "```"+showAction+"``` ";
+                        }
+                        else {
+                            TextAll += "```"+showAction+"```";
+                        }
+                    }
                 }
             }
             //holder.messageText.setText(TextAll);
@@ -101,13 +135,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         {
             //TextAll = "";
             for (SlackFile slackfile: message.files) {
-                if(slackfile.url_private_download != null)
-                {
-                    TextAll += (!TextAll.contains(slackfile.url_private_download))?((TextAll.length()>0?"\n":"")+(slackfile.name!=null?((!slackfile.url_private_download.contains(slackfile.name))?slackfile.name+"\n":""):"")+slackfile.url_private_download):"";
-                }
-                else if(slackfile.url_private != null)
+                if(slackfile.url_private != null)
                 {
                     TextAll += (!TextAll.contains(slackfile.url_private))?((TextAll.length()>0?"\n":"")+(slackfile.name!=null?((!slackfile.url_private.contains(slackfile.name))?slackfile.name+"\n":""):"")+slackfile.url_private):"";
+                }
+                else if(slackfile.url_private_download != null)
+                {
+                    TextAll += (!TextAll.contains(slackfile.url_private_download))?((TextAll.length()>0?"\n":"")+(slackfile.name!=null?((!slackfile.url_private_download.contains(slackfile.name))?slackfile.name+"\n":""):"")+slackfile.url_private_download):"";
                 }
             }
             //holder.messageText.setText(TextAll);
@@ -119,7 +153,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             botuser.id = message.bot_id;
             botuser.name = message.bot_id;
             botuser.profile = new Profile();
-            botuser.profile.real_name = "Bot ("+message.bot_id+")";
+            botuser.profile.real_name = (message.username!=null)?(message.username+" ("+message.bot_id+")"):("Bot ("+message.bot_id+")");
             myMembersWrapper.members.add(botuser);
             message.member = botuser;
 
@@ -205,7 +239,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 if(replaceNameER.toLowerCase().equals("everyone"))
                 {
                     if(myContext != null) {
-                        replaceNameER = myContext.getString(R.string.everyone);
+                        replaceNameER = myContext.getString(R.string.everyone_broadcast)+" :public_address_loudspeaker:";
+                    }
+                }
+                else if(replaceNameER.toLowerCase().equals("channel"))
+                {
+                    if(myContext != null) {
+                        replaceNameER = myContext.getString(R.string.channel_broadcast)+" :public_address_loudspeaker:";
+                    }
+                }
+                else if(replaceNameER.toLowerCase().equals("group"))
+                {
+                    if(myContext != null) {
+                        replaceNameER = myContext.getString(R.string.group_broadcast)+" :public_address_loudspeaker:";
                     }
                 }
                 TextAll = TextAll.replaceFirst(myPatternER, replaceNameER);
@@ -534,8 +580,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
         Linkify.addLinks( holder.messageText, Linkify.ALL );
 
-        if(message.icons != null)
-        {
+        if((message.icons != null)?(message.icons.image_48!=null):false) {
             Picasso.with(holder.itemView.getContext()).
                     load(message.icons.image_48).
                     into(holder.imageViewMessageProfile);

@@ -65,5 +65,9 @@
     <string name="tried">Het probeer maar kon nie</string>
     <string name="im_activated">Kitsboodskappe Geaktiveer</string>
     <string name="channel_activated">Kanaal Geaktiveer</string>
-    <string name="everyone">Almal</string>
+    <string name="everyone_broadcast">*Almal*</string>
+    <string name="channel_broadcast">*Kanaal*</string>
+    <string name="group_broadcast">*Groep*</string>
+    <string name="add_a_comment">Lug \'n mening</string>
+    <string name="has_a_poll_for_you">het \'n meningspeiling geloods</string>
 </resources>

@@ -65,5 +65,9 @@
     <string name="tried">Essayé mais ne pouvait pas</string>
     <string name="im_activated">Message Instantané Actif</string>
     <string name="channel_activated">Canal Actif</string>
-    <string name="everyone">Chacun</string>
+    <string name="everyone_broadcast">*Chacun*</string>
+    <string name="channel_broadcast">*le Canal*</string>
+    <string name="group_broadcast">*le Groupe*</string>
+    <string name="add_a_comment">Ajouter un commentaire</string>
+    <string name="has_a_poll_for_you">a lancé un questionnaire</string>
 </resources>

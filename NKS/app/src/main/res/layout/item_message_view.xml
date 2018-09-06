@@ -65,6 +65,11 @@
                     android:enabled="true"
                     android:textIsSelectable="true"
                     tools:text="Hello, this is what I have to say..." /><!--android:allowUndo="true"-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ItemSelectorView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
         </LinearLayout>
