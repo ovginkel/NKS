@@ -65,4 +65,5 @@
     <string name="tried">Essayé mais ne pouvait pas</string>
     <string name="im_activated">Message Instantané Actif</string>
     <string name="channel_activated">Canal Actif</string>
+    <string name="everyone">Chacun</string>
 </resources>
