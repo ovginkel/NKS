@@ -8,4 +8,9 @@ public class Attachment {
     public String fallback;
     public String title;
     public List<String> markdwn_in;
+    public List<SlackAction> actions;
+    public String callback_id;
+    public String color;
+    public String attachment_type;
+    public Integer comments_count; //1
 }

@@ -65,5 +65,9 @@
     <string name="tried">Tried but could not</string>
     <string name="im_activated">IM Activated</string>
     <string name="channel_activated">Channel Activated</string>
-    <string name="everyone">Everyone</string>
+    <string name="everyone_broadcast">*Everyone*</string>
+    <string name="channel_broadcast">*Channel*</string>
+    <string name="group_broadcast">*Group*</string>
+    <string name="add_a_comment">Add a Comment</string>
+    <string name="has_a_poll_for_you">has a poll for you</string>
 </resources>
