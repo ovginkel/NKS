@@ -60,6 +60,7 @@
     <string name="deactivated_refresh">Verfrissing onaktief</string>
     <string name="background_icon">Agtergrond Ikoon</string>
     <string name="empty_user">Naamloos</string>
+    <string name="inactive_profile">onaktiewe profiel</string>
     <string name="file_upload_success">Suksesvolle oplaai</string>
     <string name="file_upload_failure">Oplaaifout</string>
     <string name="tried">Het probeer maar kon nie</string>

@@ -60,6 +60,7 @@
     <string name="deactivated_refresh">Deactivated refreshing</string>
     <string name="background_icon">Background Icon</string>
     <string name="empty_user">Nameless</string>
+    <string name="inactive_profile">inactive profile</string>
     <string name="file_upload_success">Successful upload</string>
     <string name="file_upload_failure">Upload failure</string>
     <string name="tried">Tried but could not</string>

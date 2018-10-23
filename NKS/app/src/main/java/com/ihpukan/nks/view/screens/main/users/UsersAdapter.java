@@ -50,7 +50,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final UsersAdapter.ViewHolder holder, int position) {
         final User user = users.get(position);
-        holder.textViewName.setText(user.profile.real_name);
+        holder.textViewName.setText(user.profile.real_name+(user.deleted?("\r\n("+holder.textViewName.getContext().getString(R.string.inactive_profile)+")"):""));
         holder.textViewPhone.setText(user.profile.phone);
         holder.textViewEmail.setText(user.profile.email);
 
@@ -64,10 +64,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             }
         });
 
-        holder.imageViewProfile.setImageResource(R.drawable.default_profile);
-        Picasso.with(holder.itemView.getContext()).
-                load(user.profile.image_48).
-                into(holder.imageViewProfile);
+
+        if(!user.deleted) {
+            holder.imageViewProfile.setImageResource(R.drawable.default_profile);
+            Picasso.with(holder.itemView.getContext()).
+                    load(user.profile.image_48).
+                    into(holder.imageViewProfile);
+        }
+        else
+        {
+            holder.imageViewProfile.setImageResource(R.drawable.glitch_crab_n);
+        }
 
 
     }

@@ -9,10 +9,6 @@ import com.jakewharton.picasso.OkHttp3Downloader;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 
-import java.net.InetSocketAddress;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-
 import javax.inject.Singleton;
 
 import dagger.Module;

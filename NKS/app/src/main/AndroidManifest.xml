@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ihpukan.nks"
-    android:versionCode="13"
-    android:versionName="1.13">
+    android:versionCode="14"
+    android:versionName="1.14">
 
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" android:maxSdkVersion="27" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28" android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!--<uses-permission android:name="android.permission.CALL_PHONE" />-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

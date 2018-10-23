@@ -73,9 +73,12 @@ public class NavigationDrawerFragment extends AbstractBaseFragment implements Na
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter.clearChannels();
-        navigationDrawerPresenter.loadProfile();
-        navigationDrawerPresenter.loadChannels();
-    }
+        if( navigationDrawerPresenter!=null) { //Prevent Null Pointer Exception
+            navigationDrawerPresenter.loadProfile();
+            navigationDrawerPresenter.loadChannels();
+        }
+
+}
 
     @Override
     public void setPresenter(NavigationDrawerContract.Presenter presenter) {

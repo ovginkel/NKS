@@ -60,6 +60,7 @@
     <string name="deactivated_refresh">Refraîchissant inactif</string>
     <string name="background_icon">Icône de fond</string>
     <string name="empty_user">Sans nom</string>
+    <string name="inactive_profile">profil inactif</string>
     <string name="file_upload_success">Télécharger le succês</string>
     <string name="file_upload_failure">Erreur de téléchargement</string>
     <string name="tried">Essayé mais ne pouvait pas</string>
