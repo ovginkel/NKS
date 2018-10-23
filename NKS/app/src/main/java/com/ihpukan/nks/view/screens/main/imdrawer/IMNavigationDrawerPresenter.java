@@ -97,8 +97,10 @@ public class IMNavigationDrawerPresenter implements IMNavigationDrawerContract.P
                             if (imCache.get(idIMs.get(j)).user.equalsIgnoreCase(membersWrapper.members.get(i).id)) {
                                 IM im = imCache.get(idIMs.get(j));
                                 im.member = membersWrapper.members.get(i);
-                                imCache.put(idIMs.get(j), im);
-                                currentIMs.add(im);
+                                if(!im.member.deleted) { //Do not list inactive profiles for im
+                                    imCache.put(idIMs.get(j), im);
+                                    currentIMs.add(im);
+                                }
                             }
                         }
                     }

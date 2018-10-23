@@ -7,6 +7,12 @@ public class Profile extends AbstractErrorModel {
     public String first_name;
     public String last_name;
     public String real_name;
+    public String real_name_normalized;
+    public String display_name;
+    public String display_name_normalized;
+    public String status_text;
+    public String status_emoji;
+    public String title;
     public String email;
     public String skype;
     public String phone;

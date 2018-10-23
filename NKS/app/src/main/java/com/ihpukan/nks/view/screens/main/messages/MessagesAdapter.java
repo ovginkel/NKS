@@ -90,13 +90,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         {
             //TextAll = "";
             for (Attachment attachment: message.attachments) {
-                if(attachment.fallback != null)
+                if(attachment.pretext != null)
                 {
-                    TextAll += (!TextAll.contains(attachment.fallback))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.fallback.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.fallback):"";
-                } else if(attachment.text != null)
+                    TextAll += (!TextAll.contains(attachment.pretext))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.pretext.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.pretext):"";
+                }
+                if(attachment.text != null)
                 {
                     TextAll += (!TextAll.contains(attachment.text))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.text.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.text):"";
+                } else if(attachment.fallback != null)
+                {
+                    TextAll += (!TextAll.contains(attachment.fallback))?((TextAll.length()>0?"\n":"")+(attachment.title!=null?((!attachment.fallback.contains(attachment.title))?attachment.title+"\n":""):"")+attachment.fallback):"";
                 }
+
 
                 if(attachment.actions != null)
                 {
@@ -160,7 +165,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
 
         ///Handle name references
-        String myPatternNR = "\\<@([A-Z0-9]*)[\\|]{0,1}([A-Za-z0-9\\_]*)\\>"; //".*?FILES_SECTION.*?\n(.*?)\n.*?FILES_SECTION.*?";
+        String myPatternNR = "\\<@([\\p{L}\\p{M}0-9]*)[\\|]{0,1}([\\p{L}\\p{M}0-9\\_]*)\\>"; //".*?FILES_SECTION.*?\n(.*?)\n.*?FILES_SECTION.*?"; //\p{L}\p{M} for diacritics instead of A-Za-z
         Pattern pNR = Pattern.compile(myPatternNR);
         Matcher mNR = pNR.matcher(TextAll);
         int replaceCounter = 0;
@@ -226,7 +231,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
 
         ///Handle everyone references
-        String myPatternER = "\\<!([A-Za-z0-9\\_]*)\\>"; //".*?FILES_SECTION.*?\n(.*?)\n.*?FILES_SECTION.*?";
+        String myPatternER = "\\<!([\\p{L}\\p{M}0-9\\_]*)\\>"; //".*?FILES_SECTION.*?\n(.*?)\n.*?FILES_SECTION.*?";
         Pattern pER = Pattern.compile(myPatternER);
         Matcher mER = pER.matcher(TextAll);
         int replaceCounterER = 0;
@@ -409,7 +414,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             mCD = pCD.matcher(ssb);
         }
 
-        String myPatternBD = "\\*([A-Za-z0-9 ]*)\\*"; //(\_|\~)
+        String myPatternBD = "\\*([\\p{L}\\p{M}0-9 ]*)\\*"; //(\_|\~)
         Pattern pBD = Pattern.compile(myPatternBD);
         Matcher mBD = pBD.matcher(ssb);
         while(mBD.find())
@@ -425,7 +430,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
         }
 
-        String myPatternIT = "\\_([A-Za-z0-9 ]*)\\_"; //(\*|\~)
+        String myPatternIT = "\\_([\\p{L}\\p{M}0-9 ]*)\\_"; //(\*|\~) //Fix for diacritics \p{L}\p{M} instead of A-Za-z0-9
         Pattern pIT = Pattern.compile(myPatternIT);
         Matcher mIT = pIT.matcher(ssb);
         while(mIT.find())
@@ -441,7 +446,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
         }
 
-        String myPatternST = "\\~([A-Za-z0-9 ]*)\\~"; //( |\*|\_)
+        String myPatternST = "\\~([\\p{L}\\p{M}0-9 ]*)\\~"; //( |\*|\_)
         Pattern pST = Pattern.compile(myPatternST);
         Matcher mST = pST.matcher(ssb);
         while(mST.find())
@@ -500,7 +505,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
 
         ///Implement styled version with emoticons
-        String myPattern = "\\:[A-Za-z0-9\\d\\-\\+\\_]*\\:";
+        String myPattern = "\\:[\\p{L}\\p{M}0-9\\d\\-\\+\\_]*\\:";
         Pattern p = Pattern.compile(myPattern);
 
         Matcher m = p.matcher(ssb);
