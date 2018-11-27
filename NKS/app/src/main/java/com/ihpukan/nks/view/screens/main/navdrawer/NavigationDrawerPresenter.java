@@ -1,26 +1,21 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
 import android.app.Activity;
-import android.widget.Toast;
 
-import com.ihpukan.nks.R;
 import com.ihpukan.nks.common.PreferenceManager;
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.ChannelJoin;
-import com.ihpukan.nks.model.ChannelList;
 import com.ihpukan.nks.model.ChannelWrapper;
 import com.ihpukan.nks.model.GroupsWrapper;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.module.network.RestApiInterface;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.internal.Collection;
 import retrofit2.Retrofit;
 
 public class NavigationDrawerPresenter implements NavigationDrawerContract.Presenter {
@@ -144,7 +139,7 @@ public class NavigationDrawerPresenter implements NavigationDrawerContract.Prese
         @Override
         public void onNext(GroupsWrapper groupsWrapper) {
             GroupsWrapper nonArchived = new GroupsWrapper();
-            int channelCount = groupsWrapper.groups.size();
+            int channelCount = (groupsWrapper!=null)?((groupsWrapper.groups!=null)?groupsWrapper.groups.size():0):0;;
             nonArchived.groups = new ArrayList<>();
             for(int ci = 0; ci<channelCount; ci++)
             {

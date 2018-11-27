@@ -1,9 +1,7 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -92,12 +90,30 @@ public class NavigationDrawerFragment extends AbstractBaseFragment implements Na
 
     @Override
     public void loadProfileComplete(User user) {
-        if (user == null || user.profile == null) return;
+        if
+                (
+                (user == null)
+                        ?
+                        true
+                        :
+                        ( user.profile == null )
+                )
+        {
+            return;
+        }
         profileName.setText(user.profile.real_name);
         setUserMail(user.profile.email);
-        Picasso.with(getContext()).
-                load(user.profile.image_192).
-                into(profileImage);
+        if( user.profile.image_192 == null )
+        {
+            Picasso.with(getContext()).
+                    load(R.drawable.glitch_crab_n).
+                    into(profileImage);
+        }
+        else {
+            Picasso.with(getContext()).
+                    load(user.profile.image_192).
+                    into(profileImage);
+        }
     }
 
     @OnClick(R.id.textViewAllUsers)

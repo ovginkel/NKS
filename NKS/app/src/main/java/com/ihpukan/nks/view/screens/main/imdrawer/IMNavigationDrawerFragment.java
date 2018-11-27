@@ -81,12 +81,31 @@ public class IMNavigationDrawerFragment extends AbstractBaseFragment implements 
 
     @Override
     public void loadProfileComplete(User user) {
-        if (user == null || user.profile == null) return;
+        if
+                (
+                (user == null)
+                        ?
+                        true
+                        :
+                        ( user.profile == null )
+                )
+        {
+            return;
+        }
         profileName.setText(user.profile.real_name);
         setUserMail(user.profile.email);
-        Picasso.with(getContext()).
-                load(user.profile.image_192).
-                into(profileImage);
+        if( user.profile.image_192 == null )
+        {
+            Picasso.with(getContext()).
+                    load(R.drawable.glitch_crab_n).
+                    into(profileImage);
+        }
+        else {
+            Picasso.with(getContext()).
+                    load(user.profile.image_192).
+                    into(profileImage);
+        }
+
     }
 
     @OnClick(R.id.textViewAllUsers) //Keep this active

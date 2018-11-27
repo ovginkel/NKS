@@ -88,7 +88,8 @@ public class IMNavigationDrawerPresenter implements IMNavigationDrawerContract.P
         public void onNext(MembersWrapper membersWrapper) {
             //usersCache = new LruCache<>(membersWrapper.members.size());
             currentIMs = new ArrayList<>();
-            for (int i = 0; i < membersWrapper.members.size(); i++) {
+            int memberCount = (membersWrapper!=null)?((membersWrapper.members!=null)?membersWrapper.members.size():0):0;
+            for (int i = 0; i < memberCount; i++) {
                 for(int j = 0; j < imCache.size(); j++)
                 {
                     if(imCache.get(idIMs.get(j)).user!=null)

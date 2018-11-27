@@ -525,39 +525,39 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                         .into(inTextEmoji);
             } else {
                 //Load from local resource set 1
-                resid = LookupCheatSheet.emojiResourceID.get(findMoji);
-                if (resid != null) {
+                Integer resid2 = LookupCheatSheet.emojiResourceID.get(findMoji);
+                if (resid2 != null) {
                     Picasso.with(holder.messageText.getContext())
-                            .load(resid)
+                            .load(resid2)
                             .into(inTextEmoji);
                 } else {
                     //Load from local resource set 2
-                    resid = LookupLocal.emojiResourceID.get(findMoji);
-                    if (resid != null) {
+                    Integer resid3 = LookupLocal.emojiResourceID.get(findMoji);
+                    if (resid3 != null) {
                         Picasso.with(holder.messageText.getContext())
-                                .load(resid)
+                                .load(resid3)
                                 .into(inTextEmoji);
                     } else { //First try hyphen then try loading from online lookup or custom team emoji urls
                         String findMojihyphen = findMoji.replaceAll("-","_");
-                        resid = LookupLocalNakuphi.emojiResourceID.get(findMojihyphen);
+                        Integer resid4 = LookupLocalNakuphi.emojiResourceID.get(findMojihyphen);
 
-                        if (resid != null) {
+                        if (resid4 != null) {
                             Picasso.with(holder.messageText.getContext())
-                                    .load(resid)
+                                    .load(resid4)
                                     .into(inTextEmoji);
                         } else {
                             //Load from local resource set 1
-                            resid = LookupCheatSheet.emojiResourceID.get(findMojihyphen);
-                            if (resid != null) {
+                            Integer resid5 = LookupCheatSheet.emojiResourceID.get(findMojihyphen);
+                            if (resid5 != null) {
                                 Picasso.with(holder.messageText.getContext())
-                                        .load(resid)
+                                        .load(resid5)
                                         .into(inTextEmoji);
                             } else {
                                 //Load from local resource set 2
-                                resid = LookupLocal.emojiResourceID.get(findMojihyphen);
-                                if (resid != null) {
+                                Integer resid6 = LookupLocal.emojiResourceID.get(findMojihyphen);
+                                if (resid6 != null) {
                                     Picasso.with(holder.messageText.getContext())
-                                            .load(resid)
+                                            .load(resid6)
                                             .into(inTextEmoji);
                                 } else { //Load from online lookup or custom team emoji urls
                                     String url = Lookup.emojiUrl.get(findMojihyphen);
@@ -567,10 +567,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                                                 .into(inTextEmoji);
                                     }
                                     else {
-                                       url = Lookup.emojiUrl.get(findMoji);
-                                        if (url != null) {
+                                       String url2 = Lookup.emojiUrl.get(findMoji);
+                                        if (url2 != null) {
                                             Picasso.with(holder.messageText.getContext())
-                                                    .load(url)
+                                                    .load(url2)
                                                     .into(inTextEmoji);
                                         }
                                     }
