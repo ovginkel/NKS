@@ -6,6 +6,7 @@ buildscript {
         jcenter()
         mavenLocal()
         mavenCentral()
+        google()
         maven { url 'http://www.sparetimelabs.com/maven2' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
@@ -15,9 +16,9 @@ buildscript {
         //classpath 'com.android.tools.build:gradle:2.3.3'
         //classpath 'com.android.tools.build:gradle:3.5.1'
         //classpath 'com.android.tools.build:gradle:3.2'
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath "io.realm:realm-gradle-plugin:3.1.2"
+        ///classpath "io.realm:realm-gradle-plugin:5.8.0"
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }

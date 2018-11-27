@@ -24,7 +24,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.internal.Collection;
+//import io.realm.internal.Collection;
 import retrofit2.Retrofit;
 
 import static com.ihpukan.nks.model.Channel.ALL_USERS_CHANNEL;

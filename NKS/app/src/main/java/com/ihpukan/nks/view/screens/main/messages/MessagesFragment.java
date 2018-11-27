@@ -181,6 +181,7 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
                 final String [] zipTypes = {".zip",".rar",".7z",".tar",".tar.bz2",".gz","tar.gz"};
                 //final String [] imgTypes = {".png",".jpg",".jpeg",".bmp"};
                 final String [] appTypes = {".exe",".apk",".dmg",".deb",".rpm"};
+                final String [] codeTypes = {".php",".c",".cpp",".h",".hpp",".cs", ".py", ".tex" };
                 DialogUtils.displayChooseOkNoDialog(activity, R.string.allow_reading_external,
                         R.string.file_selection_for_upload, new IDialogClickListener() {
                             @Override
@@ -192,6 +193,7 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
                                         .addFileSupport("ZIP",zipTypes, R.drawable.ic_file)
                                         //.addFileSupport("IMG",imgTypes, R.drawable.ic_camera)
                                         .addFileSupport("APP",appTypes, R.drawable.ic_file)
+                                        .addFileSupport("CDE",appTypes, R.drawable.ic_file)
                                         .showFolderView(true)
                                         .pickFile(activity);
                             }
