@@ -1,6 +1,5 @@
 package com.ihpukan.nks.view.screens.main.navdrawer;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.model.Channel;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,7 +34,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_holder_channel, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R2.layout.item_holder_channel, parent, false);
         //ViewHolder vh = new ViewHolder(v);
         return new ViewHolder(v);
     }
@@ -108,11 +108,11 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageViewPrivateChannel)
+        @BindView(R2.id.imageViewPrivateChannel)
         ImageView imageViewPrivateChannel;
-        @BindView(R.id.textViewChannelName)
+        @BindView(R2.id.textViewChannelName)
         TextView textView;
-        @BindView(R.id.imageViewChannelMessage)
+        @BindView(R2.id.imageViewChannelMessage)
         ImageView imageViewChannelMessage;
 
 

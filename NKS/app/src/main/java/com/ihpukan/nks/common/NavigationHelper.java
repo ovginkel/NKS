@@ -2,12 +2,13 @@ package com.ihpukan.nks.common;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.IdRes;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.ihpukan.nks.view.base.AbstractBaseActivity;
 import com.ihpukan.nks.view.base.AbstractBaseFragment;
+
+import androidx.annotation.IdRes;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class NavigationHelper {
 

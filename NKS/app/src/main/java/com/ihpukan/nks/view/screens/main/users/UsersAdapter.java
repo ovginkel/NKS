@@ -1,6 +1,5 @@
 package com.ihpukan.nks.view.screens.main.users;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,7 +43,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     @Override
     public UsersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_user_card_view, parent, false);
+                .inflate(R2.layout.item_user_card_view, parent, false);
         //UsersAdapter.ViewHolder vh = new UsersAdapter.ViewHolder(view);
         return new UsersAdapter.ViewHolder(view);
     }
@@ -50,7 +51,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final UsersAdapter.ViewHolder holder, int position) {
         final User user = users.get(position);
-        holder.textViewName.setText(user.profile.real_name+(user.deleted?("\r\n("+holder.textViewName.getContext().getString(R.string.inactive_profile)+")"):""));
+        String viewName = user.profile.real_name+(user.deleted?("\r\n("+holder.textViewName.getContext().getString(R.string.inactive_profile)+")"):"");
+        holder.textViewName.setText(viewName);
         holder.textViewPhone.setText(user.profile.phone);
         holder.textViewEmail.setText(user.profile.email);
 
@@ -85,12 +87,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             this.users.addAll(musers);
         } else {
             if(musers!=null) {
-                this.users = new ArrayList<User>(musers.size());
+                this.users = new ArrayList<>(musers.size());
                 this.users.addAll(musers);
             }
             else
             {
-                this.users = new ArrayList<User>();
+                this.users = new ArrayList<>();
             }
         }
         if(this.users != null ?musers!=null:false) {
@@ -116,15 +118,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.realName)
+        @BindView(R2.id.realName)
         TextView textViewName;
-        @BindView(R.id.phone)
+        @BindView(R2.id.phone)
         TextView textViewPhone;
-        @BindView(R.id.email)
+        @BindView(R2.id.email)
         TextView textViewEmail;
-        @BindView(R.id.imageViewProfile) //R.id.imageViewProfile
+        @BindView(R2.id.imageViewProfile) //R.id.imageViewProfile
         ImageView imageViewProfile;
-        @BindView(R.id.imageViewOpenIm)
+        @BindView(R2.id.imageViewOpenIm)
         ImageView imageViewOpenIm;
 
         public ViewHolder(View view) {

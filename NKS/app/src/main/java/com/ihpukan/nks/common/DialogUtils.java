@@ -2,10 +2,11 @@ package com.ihpukan.nks.common;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
 
 import com.ihpukan.nks.R;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 
 public class DialogUtils {
 

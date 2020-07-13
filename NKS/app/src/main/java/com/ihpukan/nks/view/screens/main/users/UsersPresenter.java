@@ -1,8 +1,6 @@
 package com.ihpukan.nks.view.screens.main.users;
 
 import android.app.Activity;
-import android.support.v4.util.LruCache;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -19,15 +17,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.LruCache;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-//import io.realm.internal.Collection;
 import retrofit2.Retrofit;
 
 import static com.ihpukan.nks.model.Channel.ALL_USERS_CHANNEL;
+
+//import io.realm.internal.Collection;
 
 public class UsersPresenter implements UsersContract.Presenter {
 
@@ -81,8 +82,9 @@ public class UsersPresenter implements UsersContract.Presenter {
             return;
         }
         currentUsers = new ArrayList<>();
-        Observable.just(idUsers).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<String>>() {
+        Observable.just(idUsers).subscribeOn(Schedulers.newThread());
+        Observable.just(idUsers).observeOn(AndroidSchedulers.mainThread());
+        Observable.just(idUsers).subscribe(new Observer<List<String>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 viewMain.showProgressBar();
@@ -94,15 +96,15 @@ public class UsersPresenter implements UsersContract.Presenter {
                     User user = usersCache.get(id);
                     if (user != null) {
                         currentUsers.add(user);
-                    }
-                    else //not in cache
+                    } else //not in cache
                     {
                         for (java.util.Iterator<User> i = allUsers.iterator(); i.hasNext();) {
                             User usr = i.next();
-                            if(user.id == id)
-                            {
-                                currentUsers.add(usr);
-                                usersCache.put(usr.id,usr);
+                            if (user != null) {
+                                if (user.id == id) {
+                                    currentUsers.add(usr);
+                                    usersCache.put(usr.id, usr);
+                                }
                             }
                         }
                     }
@@ -139,7 +141,9 @@ public class UsersPresenter implements UsersContract.Presenter {
         idUsers.clear();
         for (java.util.Iterator<User> i = allUsers.iterator(); i.hasNext();) { //Required for user load fix
             User usr = i.next();
-            idUsers.add(usr.id);
+            if(usr!=null) {
+                idUsers.add(usr.id);
+            }
         }
         this.loadUsers(activity, idUsers); //Required for user load fix
     }
@@ -227,7 +231,7 @@ public class UsersPresenter implements UsersContract.Presenter {
                 idUsers = new ArrayList<>();
                 currentUsers.clear();
                 if(currentChannel != null?(currentChannel.members == null):false) {
-                    currentChannel.members = new ArrayList<String>();
+                    currentChannel.members = new ArrayList<>();
                 }
                 for (int i = 0; i < membersWrapper.members.size(); i++) {
                     User user = membersWrapper.members.get(i);

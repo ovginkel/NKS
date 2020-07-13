@@ -1,6 +1,6 @@
 package com.ihpukan.nks.view.screens.main.imdrawer;
 
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache; //import android.support.v4.util.LruCache;
 
 import com.ihpukan.nks.common.PreferenceManager;
 import com.ihpukan.nks.model.IM;

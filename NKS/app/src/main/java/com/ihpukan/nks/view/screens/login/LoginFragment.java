@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,25 +19,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.R;
 import com.ihpukan.nks.common.Constants;
 import com.ihpukan.nks.common.JavaScriptTokenIntercept;
 import com.ihpukan.nks.view.base.AbstractBaseFragment;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//import android.support.v7.app.AlertDialog;
+//import import androidx.appcompat.app.AlertDialog; //import android.support.v7.app.AlertDialog;
 
 public class LoginFragment extends AbstractBaseFragment implements LoginContract.View {
 
-    @BindView(R.id.webView)
+    @BindView(R2.id.webView)
     WebView webView;
 
-    @BindView(R.id.progressBar)
+    @BindView(R2.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.backIcon)
+    @BindView(R2.id.backIcon)
     ImageView backIcon;
 
 
@@ -56,7 +57,7 @@ public class LoginFragment extends AbstractBaseFragment implements LoginContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R2.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new CustomWebClient());

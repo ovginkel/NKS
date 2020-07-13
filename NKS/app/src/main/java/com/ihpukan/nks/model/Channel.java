@@ -37,7 +37,7 @@ public class Channel {
         this.last_read = another.last_read;
         this.unread_count = another.unread_count;
         this.unread_count_display = another.unread_count_display;
-        this.members = new ArrayList<String>(another.members);
+        this.members = new ArrayList<>(another.members);
     }
 
     public Channel(){};

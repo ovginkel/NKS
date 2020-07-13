@@ -1,7 +1,6 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.IM;
@@ -10,6 +9,8 @@ import com.ihpukan.nks.model.Message;
 import com.ihpukan.nks.view.base.AbstractBaseView;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public interface MessagesContract {
 

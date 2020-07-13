@@ -1,6 +1,6 @@
 package com.ihpukan.nks.model;
 
-import java.util.List;
+//import java.util.List;
 
 public class AttachmentField {
     public String title;

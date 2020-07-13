@@ -3,7 +3,6 @@ package com.ihpukan.nks.view.screens.main.messages;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
@@ -19,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.common.CommonUtils;
 import com.ihpukan.nks.common.RoundedBackgroundSpan;
 import com.ihpukan.nks.emoji.CustomTarget;
@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,7 +65,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     public MessagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         myContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_message_view, parent, false);
+                .inflate(R2.layout.item_message_view, parent, false);
         return new MessagesAdapter.ViewHolder(view);
     }
 
@@ -414,7 +415,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             mCD = pCD.matcher(ssb);
         }
 
-        String myPatternBD = "\\*([\\p{L}\\p{M}0-9 ]*)\\*"; //(\_|\~)
+        String myPatternBD = "\\*([\\p{L}\\p{M}0-9 \\p{S}\\p{N};%]*)\\*"; //(\_|\~)
         Pattern pBD = Pattern.compile(myPatternBD);
         Matcher mBD = pBD.matcher(ssb);
         while(mBD.find())
@@ -430,7 +431,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
         }
 
-        String myPatternIT = "\\_([\\p{L}\\p{M}0-9 ]*)\\_"; //(\*|\~) //Fix for diacritics \p{L}\p{M} instead of A-Za-z0-9
+        String myPatternIT = "\\_([\\p{L}\\p{M}0-9 \\p{S}\\p{N};%]*)\\_"; //(\*|\~) //Fix for diacritics \p{L}\p{M} instead of A-Za-z0-9 //Add fix for other symbols
         Pattern pIT = Pattern.compile(myPatternIT);
         Matcher mIT = pIT.matcher(ssb);
         while(mIT.find())
@@ -446,7 +447,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
         }
 
-        String myPatternST = "\\~([\\p{L}\\p{M}0-9 ]*)\\~"; //( |\*|\_)
+        String myPatternST = "\\~([\\p{L}\\p{M}0-9 \\p{S}\\p{N};%]*)\\~"; //( |\*|\_)
         Pattern pST = Pattern.compile(myPatternST);
         Matcher mST = pST.matcher(ssb);
         while(mST.find())
@@ -620,7 +621,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             }
             else
             {
-                this.messages = new ArrayList<Message>();
+                this.messages = new ArrayList<>();
             }
         }
         if(musers!=null) {
@@ -644,13 +645,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.imageViewMessageProfile)
+        @BindView(R2.id.imageViewMessageProfile)
         ImageView imageViewMessageProfile;
-        @BindView(R.id.senderOfMessage)
+        @BindView(R2.id.senderOfMessage)
         TextView senderOfMessage;
-        @BindView(R.id.sentTime)
+        @BindView(R2.id.sentTime)
         TextView sentTime;
-        @BindView(R.id.messageText)
+        @BindView(R2.id.messageText)
         EditText messageText;
 
         public ViewHolder(View view) {

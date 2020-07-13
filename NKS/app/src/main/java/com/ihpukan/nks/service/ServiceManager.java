@@ -17,6 +17,7 @@ package com.ihpukan.nks.service;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -27,15 +28,17 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
+import com.ihpukan.nks.poll.RefreshPollService;
+
 public class ServiceManager {
-    private Class<? extends AbstractService> mServiceClass;
+    private Class<? extends Service> mServiceClass;
     private Context mActivity;
     private boolean mIsBound;
     private Messenger mService = null;
-    private Handler mIncomingHandler = null;
-    private final Messenger mMessenger = new Messenger(new IncomingHandler());
+    static private Handler mIncomingHandler = null;
+    static private final Messenger mMessenger = new Messenger(new IncomingHandler());
 
-    private class IncomingHandler extends Handler {
+    static private class IncomingHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             if (mIncomingHandler != null) {
@@ -51,7 +54,7 @@ public class ServiceManager {
             //textStatus.setText("Attached.");
             //Log.i("ServiceHandler", "Attached.");
             try {
-                Message msg = Message.obtain(null, AbstractService.MSG_REGISTER_CLIENT);
+                Message msg = Message.obtain(null, RefreshPollService.MSG_REGISTER_CLIENT);
                 msg.replyTo = mMessenger;
                 mService.send(msg);
             } catch (RemoteException e) {
@@ -67,10 +70,10 @@ public class ServiceManager {
         }
     };
 
-    public ServiceManager(Context context, Class<? extends AbstractService> serviceClass, Handler incomingHandler) {
+    public ServiceManager(Context context, Class<? extends Service> serviceClass, Handler incomingHandler) {
         this.mActivity = context;
         this.mServiceClass = serviceClass;
-        this.mIncomingHandler = incomingHandler;
+        mIncomingHandler = incomingHandler;
 
         if (isRunning()) {
             doBindService();
@@ -132,7 +135,7 @@ public class ServiceManager {
             // If we have received the service, and hence registered with it, then now is the time to unregister.
             if (mService != null) {
                 try {
-                    Message msg = Message.obtain(null, AbstractService.MSG_UNREGISTER_CLIENT);
+                    Message msg = Message.obtain(null, RefreshPollService.MSG_UNREGISTER_CLIENT);
                     msg.replyTo = mMessenger;
                     mService.send(msg);
                 } catch (RemoteException e) {

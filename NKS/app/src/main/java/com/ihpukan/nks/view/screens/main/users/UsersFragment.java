@@ -3,10 +3,6 @@ package com.ihpukan.nks.view.screens.main.users;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +10,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.ihpukan.nks.R;
+//import com.ihpukan.nks.R2;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.view.base.AbstractBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -101,7 +102,7 @@ public class UsersFragment extends AbstractBaseFragment implements UsersContract
         hideProgressBar();
         if (musers == null || musers.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.not_found_users, Toast.LENGTH_SHORT).show();
-            usersAdapter.addUsers(new ArrayList<User>());
+            usersAdapter.addUsers(new ArrayList<>());
             updateViews();
         } else {
             if((musers!=null)?(!musers.isEmpty()):false)
