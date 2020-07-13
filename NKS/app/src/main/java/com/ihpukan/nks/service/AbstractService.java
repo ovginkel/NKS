@@ -22,10 +22,11 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 
 import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 
 //import android.util.Log;
 
@@ -35,7 +36,7 @@ public abstract class AbstractService extends Service {
     static final int MSG_REGISTER_CLIENT = 9991;
     static final int MSG_UNREGISTER_CLIENT = 9992;
 
-    ArrayList<Messenger> mClients = new ArrayList<>(); // Keeps track of all current registered clients.
+    static ArrayList<Messenger> mClients = new ArrayList<>(); // Keeps track of all current registered clients.
     final Messenger mMessenger = new Messenger(new IncomingHandler()); // Target we publish for clients to send messages to IncomingHandler.
 
     public AbstractService(String name) {
@@ -104,7 +105,7 @@ public abstract class AbstractService extends Service {
         //Log.i("MyService", "Service Stopped.");
     }
 
-    protected void send(Message msg) {
+    protected static void send(Message msg) {
         for (int i=mClients.size()-1; i>=0; i--) {
             try {
                 //Log.i("MyService", "Sending message to clients: "+msg);
@@ -121,7 +122,9 @@ public abstract class AbstractService extends Service {
 
     public abstract void onStartService();
     public abstract void onStopService();
-    public abstract void onReceiveMessage(Message msg);
+    public static void onReceiveMessage(Message msg){
+        //Pseudo-abstract needs to be overridden to do something
+    };
 
 
     ////////////

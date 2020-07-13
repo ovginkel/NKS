@@ -1,6 +1,6 @@
 package com.ihpukan.nks.view.base;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment; //import android.support.v4.app.Fragment;
 
 public abstract class AbstractBaseFragment extends Fragment{
     public static String userMail;

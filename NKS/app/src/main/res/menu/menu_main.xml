@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_36dp"
         android:title="@string/action_search_users"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
-    <!--
-    <item
-        android:id="@+id/action_import_contacts"
-        android:title="@string/import_contacts"
-        app:showAsAction="never" />
-        -->
     <item
         android:id="@+id/action_exit"
         android:title="@string/exit"
         app:showAsAction="never" />
-
 
     <item
         android:id="@+id/action_log_out"
@@ -50,6 +42,5 @@
         android:id="@+id/action_send_message"
         android:title="@string/send_message"
         app:showAsAction="never" />
-
 
 </menu>

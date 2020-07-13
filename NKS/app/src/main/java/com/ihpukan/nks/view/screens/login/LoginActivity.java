@@ -3,6 +3,7 @@ package com.ihpukan.nks.view.screens.login;
 import android.os.Bundle;
 
 import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.NKSApplication;
 import com.ihpukan.nks.common.NavigationHelper;
 import com.ihpukan.nks.common.PreferenceManager;
@@ -23,7 +24,7 @@ public class LoginActivity extends AbstractBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R2.layout.activity_login);
         LoginFragment fragment = new LoginFragment();
         this.loginPresenter = new LoginPresenter(fragment, PreferenceManager.get(this), retrofit);
         NavigationHelper.addFragment(getSupportFragmentManager(), fragment, R.id.container);

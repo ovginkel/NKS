@@ -4,10 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.common.DialogUtils;
 import com.ihpukan.nks.common.IDialogClickListener;
 import com.ihpukan.nks.common.IGrantPermissionCallback;
@@ -31,20 +28,26 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
+import droidninja.filepicker.models.sort.SortingTypes;
 
 
 public class MessagesFragment extends AbstractBaseFragment implements MessagesContract.View, OnSendClickListener, OnRefreshClickListener, OnUploadClickListener {
 
-    @BindView(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @BindView(R.id.progressBar)
+    @BindView(R2.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.backIconMain)
+    @BindView(R2.id.backIconMain)
     ImageView backIcon;
 
     public MessagesContract.Presenter presenter;
@@ -53,7 +56,7 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R2.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         messagesAdapter = new MessagesAdapter(this);
@@ -124,7 +127,7 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
         //messagesAdapter.clearMessages();
         if (mmessages == null || mmessages.isEmpty()) {
             //Toast.makeText(getActivity(), R.string.not_found_messages, Toast.LENGTH_SHORT).show();
-            messagesAdapter.addMessages(new ArrayList<Message>(),presenter.getMembersWrapper());
+            messagesAdapter.addMessages(new ArrayList<>(),presenter.getMembersWrapper());
         } else {
             messagesAdapter.addMessages(mmessages,presenter.getMembersWrapper());
         }
@@ -186,16 +189,19 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
                         R.string.file_selection_for_upload, new IDialogClickListener() {
                             @Override
                             public void onOK() {
-                                FilePickerBuilder.getInstance().setMaxCount(1)
-                                        //.setSelectedFiles(filePaths)
-                                        .enableDocSupport(true)
-                                        .setActivityTheme(R.style.AppTheme)
-                                        .addFileSupport("ZIP",zipTypes, R.drawable.ic_file)
-                                        //.addFileSupport("IMG",imgTypes, R.drawable.ic_camera)
-                                        .addFileSupport("APP",appTypes, R.drawable.ic_file)
-                                        .addFileSupport("CDE",appTypes, R.drawable.ic_file)
-                                        .showFolderView(true)
-                                        .pickFile(activity);
+                                if(activity!=null) {
+                                    FilePickerBuilder.Companion.getInstance().setMaxCount(1)
+                                            //.setSelectedFiles(filePaths)
+                                            .sortDocumentsBy(SortingTypes.name)
+                                            .enableDocSupport(true)
+                                            .setActivityTheme(R2.style.AppTheme)
+                                            .addFileSupport("ZIP", zipTypes, R.drawable.icon_file_unknown)
+                                            //.addFileSupport("IMG",imgTypes, R.drawable.ic_camera)
+                                            .addFileSupport("APP", appTypes, R.drawable.icon_file_unknown)
+                                            .addFileSupport("CDE", codeTypes, R.drawable.icon_file_unknown)
+                                            .showFolderView(true)
+                                            .pickFile(activity, FilePickerConst.REQUEST_CODE_DOC);
+                                }
                             }
                         });
             }
@@ -217,11 +223,13 @@ public class MessagesFragment extends AbstractBaseFragment implements MessagesCo
                         R.string.image_selection_for_upload, new IDialogClickListener() {
                             @Override
                             public void onOK() {
-                                FilePickerBuilder.getInstance().setMaxCount(1)
-                                        //.setSelectedFiles(photoPaths)
-                                        .setActivityTheme(R.style.AppTheme)
-                                        .showGifs(false)
-                                        .pickPhoto(activity); //Disable gif to prevent bad gif failure.
+                                if(activity!=null) {
+                                    FilePickerBuilder.Companion.getInstance().setMaxCount(1)
+                                            //.setSelectedFiles(photoPaths)
+                                            .setActivityTheme(R2.style.AppTheme)
+                                            .showGifs(false)
+                                            .pickPhoto(activity, FilePickerConst.REQUEST_CODE_PHOTO); //Disable gif to prevent bad gif failure.
+                                }
                             }
                         });
             }

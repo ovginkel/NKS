@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ihpukan.nks"
-    android:versionCode="15"
-    android:versionName="1.15">
+    android:versionCode="17"
+    android:versionName="1.17">
 
     <uses-sdk android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,6 +13,16 @@
     <!--<uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />-->
 
+    <!--<provider
+        android:name="androidx.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/nnf_provider_paths" />
+    </provider>-->
+
     <application
         android:name=".NKSApplication"
         android:allowBackup="false"
@@ -21,9 +31,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup"
-
+        tools:overrideLibrary="droidninja.filepicker"
          ><!-- android:roundIcon="@mipmap/ic_launcher_round" android:icon="@mipmap/ic_launcher"-->
-
+        <!--meta-data android:name="firebase_analytics_collection_deactivated" android:value="true"-->
+        <!--meta-data android:name="google_analytics_adid_collection_enabled" android:value="false"-->
         <activity
             android:name=".view.screens.login.LoginActivity"
             android:screenOrientation="portrait">
@@ -45,8 +56,16 @@
             </intent-filter>
 
         </activity>
-        
-        
+
+        <!--<activity
+            android:name="com.nononsenseapps.filepicker.FilePickerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/FilePickerTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>-->
 
     </application>
     

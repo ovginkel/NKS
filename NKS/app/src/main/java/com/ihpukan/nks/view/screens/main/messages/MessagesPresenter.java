@@ -1,8 +1,6 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
 import android.app.Activity;
-import android.support.v4.util.LruCache;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.ihpukan.nks.R;
@@ -28,6 +26,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.collection.LruCache;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

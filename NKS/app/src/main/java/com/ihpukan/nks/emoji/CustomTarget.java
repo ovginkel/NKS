@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -16,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.RequiresApi;
 
 public class CustomTarget implements Target {
     private String url;
@@ -79,10 +80,14 @@ public class CustomTarget implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable)
+    public void onBitmapFailed(Drawable errorDrawable) //Exception exception,
     {
 
     }
+    /*public void onBitmapFailed(Drawable errorDrawable)
+    {
+
+    }*/
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable)

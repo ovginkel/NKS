@@ -7,16 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,13 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.support.v7.widget.ContentFrameLayout;
-//import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihpukan.nks.NKSApplication;
 import com.ihpukan.nks.R;
+import com.ihpukan.nks.R2;
 import com.ihpukan.nks.common.CommonUtils;
 import com.ihpukan.nks.common.DialogUtils;
 import com.ihpukan.nks.common.IDialogClickListener;
@@ -58,26 +51,35 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ContentFrameLayout;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import droidninja.filepicker.FilePickerConst;
 import retrofit2.Retrofit;
 
+//import android.widget.FrameLayout;
+
 public class MainActivity extends AbstractBaseActivity implements OnIMClickListener, OnChannelClickListener,
-        MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener, TextView.OnEditorActionListener {
+        /*MenuItemCompat.OnActionExpandListener,*/ SearchView.OnQueryTextListener, TextView.OnEditorActionListener {
 
     @Inject
     Retrofit retrofit;
     @Inject
     Retrofit retrofitMessage;
 
-    @BindView(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.navigation_drawer)
+    @BindView(R2.id.navigation_drawer)
     DrawerLayout drawerLayout;
 
-    @BindView(R.id.left_drawer)
+    @BindView(R2.id.left_drawer)
     ContentFrameLayout drawerContainer;
 
     SearchView searchView;
@@ -85,25 +87,28 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
     ActionBarDrawerToggle drawerToggle;
     NavigationDrawerPresenter navigationDrawerPresenter;
     UsersPresenter mainPresenter;
-    MessagesPresenter messagePresenter;
+    static MessagesPresenter messagePresenter;
 
     IMNavigationDrawerPresenter imNavigationDrawerPresenter;
     IMNavigationDrawerFragment imNavigationDrawerFragment;
 
-    Boolean mainPresenterActive = false;
-    Boolean messagePresenterActive = false;
+    static Boolean mainPresenterActive = false;
+    static Boolean messagePresenterActive = false;
 
     UsersFragment mainFragment;
-    public MessagesFragment messagesFragment;
+    static public MessagesFragment messagesFragment;
 
     private ServiceManager service;
 
-   private NotificationManager mNotificationManager;
-   private Notification mNotification;
+   static private NotificationManager mNotificationManager;
+   static private Notification mNotification;
 
     boolean refreshIsActive = false;
 
     boolean searchIsActive = false;
+
+    static Context thisActivityContext;
+    static incomingRefreshPollServiceHandler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,9 +118,9 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             finish();
             return; // add this to prevent from doing unnecessary stuffs
         }
-
-
-        setContentView(R.layout.activity_main);
+        thisActivityContext = this;
+        mHandler = new incomingRefreshPollServiceHandler();
+        setContentView(R2.layout.activity_main);
 
         ButterKnife.bind(this);
 
@@ -138,83 +143,87 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
         mainFragment.setPresenter(mainPresenter);
         NavigationHelper.addFragment(getSupportFragmentManager(), mainFragment, R.id.main_container); //R.id.main_container
 
-        this.service = new ServiceManager(this, RefreshPollService.class, new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                // Receive message from service
-                switch (msg.what) {
-                    case RefreshPollService.MSG_DO:
-                        //textValue1.setText("Counter @ Service1: " + msg.arg1);
-                        if(messagePresenterActive) {
-
-                            if(msg.arg1==RefreshPollService.NOTIFY_MESSAGES) {
-                                if (messagePresenter.numberOfNewMessages > 0) {
-
-                                    Intent notificationIntent = new Intent(messagesFragment.getContext(), MainActivity.class);
-                                    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    PendingIntent contentIntent = PendingIntent.getActivity(messagesFragment.getContext(),
-                                            0, notificationIntent,
-                                            PendingIntent.FLAG_CANCEL_CURRENT);
-
-                                    mNotification = new Notification.Builder(messagesFragment.getContext())
-                                            .setContentTitle("NKS (" + (messagePresenter.numberOfNewMessages) + ")")
-                                            .setContentText(getString(R.string.messages_received))
-                                            .setSmallIcon(R.drawable.new_message_icon)
-                                            .setSubText(getString(R.string.nks_got)+" "+((messagePresenter.numberOfNewMessages>1)?(messagePresenter.numberOfNewMessages)+" "+getString(R.string.multi_new_messages):getString(R.string.single_new_message)) )
-                                            .setContentIntent(contentIntent)
-                                            .build();
-
-                                    mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-                                    mNotification.priority = Notification.PRIORITY_HIGH;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                        mNotification.category = Notification.CATEGORY_MESSAGE;
-                                        mNotification.color = Notification.COLOR_DEFAULT;
-                                    }
-                                    mNotification.vibrate = new long[]{500, 200, 500, 200, 500};
-
-                                    mNotificationManager.notify("NKS", 1, mNotification);
-                                    messagePresenter.numberOfNewMessages = 0;
-                                }
-                            }
-                            else if(msg.arg1==RefreshPollService.UPDATE_MESSAGES)
-                            {
-                                if(messagesFragment.presenter!=null) {
-                                    messagesFragment.onRefreshMessages();
-                                }
-                                else{ //Fix dead presenter
-                                    mainPresenterActive = false;
-                                    //if(messagePresenterActive == false) {
-                                    messagesFragment = new MessagesFragment();
-
-                                    //messagePresenter = new MessagesPresenter(messagesFragment, retrofitMessage, PreferenceManager.get(getApplicationContext()), AbstractBaseFragment.getUserMail()!=null?AbstractBaseFragment.getUserMail():"");
-                                    messagesFragment.setPresenter(messagePresenter);
-
-                                    NavigationHelper.addFragment(getSupportFragmentManager(), messagesFragment, R.id.main_container);
-                                    //}
-                                    if(messagePresenter.currentChannel!=null)
-                                    {
-                                        messagePresenter.onChannelClick((AppCompatActivity) getApplicationContext(), messagePresenter.currentChannel);
-                                    }
-                                    else if (messagePresenter.currentIM!=null)
-                                    {
-                                        messagePresenter.onChannelClick((AppCompatActivity) getApplicationContext(), messagePresenter.currentChannel);
-                                    }
-                                    messagePresenterActive = true;
-                                }
-                            }
-
-                        }
-                        break;
-
-                    default:
-                        super.handleMessage(msg);
-                }
-            }
-        });
+        this.service = new ServiceManager(this, RefreshPollService.class,mHandler);
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         drawerLayout.openDrawer(drawerContainer);
+    }
+
+    static private class incomingRefreshPollServiceHandler extends android.os.Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            // Receive message from service
+            switch (msg.what) {
+                case RefreshPollService.MSG_DO:
+                    //textValue1.setText("Counter @ Service1: " + msg.arg1);
+                    if(messagePresenterActive) {
+
+                        if(msg.arg1==RefreshPollService.NOTIFY_MESSAGES) {
+                            if (messagePresenter.numberOfNewMessages > 0) {
+
+                                Intent notificationIntent = new Intent(messagesFragment.getContext(), MainActivity.class);
+                                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                PendingIntent contentIntent = PendingIntent.getActivity(messagesFragment.getContext(),
+                                        0, notificationIntent,
+                                        PendingIntent.FLAG_CANCEL_CURRENT);
+
+                                mNotification = new Notification.Builder(messagesFragment.getContext())
+                                        .setContentTitle("NKS (" + (messagePresenter.numberOfNewMessages) + ")")
+                                        .setContentText(Resources.getSystem().getString(R.string.messages_received))
+                                        .setSmallIcon(R.drawable.new_message_icon_notify)
+                                        .setSubText(Resources.getSystem().getString(R.string.nks_got)+" "+((messagePresenter.numberOfNewMessages>1)?(messagePresenter.numberOfNewMessages)+" "+Resources.getSystem().getString(R.string.multi_new_messages):Resources.getSystem().getString(R.string.single_new_message)) )
+                                        .setContentIntent(contentIntent)
+                                        .build();
+
+                                mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+                                mNotification.priority = Notification.PRIORITY_HIGH;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    mNotification.category = Notification.CATEGORY_MESSAGE;
+                                    mNotification.color = Notification.COLOR_DEFAULT;
+                                }
+                                mNotification.vibrate = new long[]{500, 200, 500, 200, 500};
+
+                                mNotificationManager.notify("NKS", 1, mNotification);
+                                messagePresenter.numberOfNewMessages = 0;
+                            }
+                        }
+                        else if(msg.arg1==RefreshPollService.UPDATE_MESSAGES)
+                        {
+                            if(messagesFragment.presenter!=null) {
+                                messagesFragment.onRefreshMessages();
+                            }
+                            else{ //Fix dead presenter
+                                mainPresenterActive = false;
+                                //if(messagePresenterActive == false) {
+                                messagesFragment = new MessagesFragment();
+
+                                //messagePresenter = new MessagesPresenter(messagesFragment, retrofitMessage, PreferenceManager.get(getApplicationContext()), AbstractBaseFragment.getUserMail()!=null?AbstractBaseFragment.getUserMail():"");
+                                messagesFragment.setPresenter(messagePresenter);
+                                FragmentManager fm = (messagesFragment.getActivity()!=null)?messagesFragment.getActivity().getSupportFragmentManager():null;
+                                if(fm!=null) {
+                                    NavigationHelper.addFragment(fm, messagesFragment, R.id.main_container);
+                                }
+                                //}
+                                if(messagePresenter.currentChannel!=null)
+                                {
+                                    messagePresenter.onChannelClick((AppCompatActivity) thisActivityContext.getApplicationContext(), messagePresenter.currentChannel);
+                                }
+                                else if (messagePresenter.currentIM!=null)
+                                {
+                                    messagePresenter.onChannelClick((AppCompatActivity) thisActivityContext.getApplicationContext(), messagePresenter.currentChannel);
+                                }
+                                messagePresenterActive = true;
+                            }
+                        }
+
+                    }
+                    break;
+
+                default:
+                    super.handleMessage(msg);
+            }
+        }
     }
 
     private void setUpNavigation() {
@@ -245,16 +254,37 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R2.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) searchItem.getActionView();/*MenuItemCompat.getActionView(searchItem);*/
         searchView.setOnQueryTextListener(this);
         int searchViewPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         EditText searchPlateEditText = (EditText) searchView.findViewById(searchViewPlateId);
         if (searchPlateEditText != null) {
             searchPlateEditText.setOnEditorActionListener(this);
         }
-        MenuItemCompat.setOnActionExpandListener(searchItem, this);
+
+        searchItem.setOnActionExpandListener((new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                if(messagePresenterActive && searchIsActive) {
+                    //if(refreshIsActive){service.stop();refreshIsActive = false;}
+                    searchIsActive = false;
+                    messagePresenter.endSearchMessage();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                if(messagePresenterActive && searchIsActive) {
+                    //if(refreshIsActive){service.stop();refreshIsActive = false;}
+                    searchIsActive = false;
+                    messagePresenter.endSearchMessage();
+                }
+                return true;
+            }
+        })); /*MenuItemCompat.setOnActionExpandListener(searchItem, this);*/
         return true;
     }
 
@@ -372,12 +402,6 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
                 }
 
                 break;
-            /*case R.id.action_import_contacts:
-                if(mainPresenterActive != false)
-                {
-                    mainPresenter.importContacts(this);
-                }
-                break;*/
             default:
                 break;
         }
@@ -390,7 +414,9 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
         {
             switch (requestCode)
             {
+                //NINJA FILE PICKER
                 case FilePickerConst.REQUEST_CODE_PHOTO:
+
                     if(resultCode== Activity.RESULT_OK && (data!=null?data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA).size()>0:false))
                     {
                         final Activity activity = this;
@@ -417,6 +443,19 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
 
                     }
                     break;
+
+                /*//No NONSENSE FILE PICKER
+                case FILE_CODE:
+                    if (resultCode == Activity.RESULT_OK) {
+                        // Use the provided utility method to parse the result
+                        final Activity activity = this;
+                        List<Uri> files = Utils.getSelectedFilesFromResult(data);
+                        for (Uri uri: files) {
+                            messagePresenter.uploadFile(activity,uri.getPath());
+                            // Do something with the result...
+                            break;
+                        }
+                         */
             }
         }
         //addThemToView(photoPaths,filePaths);
@@ -472,7 +511,7 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             NavigationHelper.addFragment(getSupportFragmentManager(), mainFragment, R.id.main_container);
         }
         mainPresenter.onChannelClick(this, channel);
-        if(!channel.equals(channel.ALL_USERS_CHANNEL)) {
+        if(!channel.name.equals(Channel.ALL_USERS_CHANNEL)) {
             navigationDrawerPresenter.joinChannel(this, channel);
         }
         mainPresenterActive = true;
@@ -515,7 +554,7 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
         messagePresenterActive = true;
     }
 
-    @Override
+    /*@Override
     public boolean onMenuItemActionExpand(MenuItem item) {
         if(messagePresenterActive && searchIsActive) {
                 //if(refreshIsActive){service.stop();refreshIsActive = false;}
@@ -523,9 +562,9 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
                 messagePresenter.endSearchMessage();
             }
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
         if(messagePresenterActive && searchIsActive) {
                 //if(refreshIsActive){service.stop();refreshIsActive = false;}
@@ -533,7 +572,7 @@ public class MainActivity extends AbstractBaseActivity implements OnIMClickListe
             messagePresenter.endSearchMessage();
         }
         return true;
-    }
+    }*/
 
     @Override
     public boolean onQueryTextSubmit(String query) {

@@ -1,13 +1,14 @@
 package com.ihpukan.nks.view.screens.main.users;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.User;
 import com.ihpukan.nks.view.base.AbstractBaseView;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public interface UsersContract {
 
