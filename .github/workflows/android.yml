@@ -13,14 +13,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
 
     - name: Build with Gradle
       run: |
+        sudo apt update
+        sudo apt install openjdk-11-jdk -Y
+        VERSION=3.3.2
+        wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp
+        sudo unzip -d /opt/gradle /tmp/gradle-${VERSION}-bin.zip
+        export GRADLE_HOME=/opt/gradle/latest 
+        export PATH=${GRADLE_HOME}/bin:${PATH}
+        gradle -v
         cd ./NKS/app/
-        gradlew build
+        gradle build
