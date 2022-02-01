@@ -1,7 +1,7 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
 import android.Manifest;
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
