@@ -1,6 +1,6 @@
 package com.ihpukan.nks.common;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 
 import com.ihpukan.nks.R;
