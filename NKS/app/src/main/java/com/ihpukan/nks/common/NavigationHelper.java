@@ -1,6 +1,6 @@
 package com.ihpukan.nks.common;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 
 import com.ihpukan.nks.view.base.AbstractBaseActivity;
