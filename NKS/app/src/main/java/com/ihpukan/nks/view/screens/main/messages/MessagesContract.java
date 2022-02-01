@@ -1,6 +1,6 @@
 package com.ihpukan.nks.view.screens.main.messages;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ihpukan.nks.model.Channel;
 import com.ihpukan.nks.model.IM;
