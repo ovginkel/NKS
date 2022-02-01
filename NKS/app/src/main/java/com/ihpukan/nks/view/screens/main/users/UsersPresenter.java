@@ -1,6 +1,6 @@
 package com.ihpukan.nks.view.screens.main.users;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
