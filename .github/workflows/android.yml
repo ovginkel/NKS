@@ -19,10 +19,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install --yes openjdk-11-jdk
         VERSION=7.3.3
-        wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp
+        wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp > ./gradledownload.log
         sudo unzip -d /opt/gradle /tmp/gradle-${VERSION}-bin.zip
         export GRADLE_HOME=/opt/gradle/latest 
         export PATH=${GRADLE_HOME}/bin:${PATH}
         gradle -v
         cd ./NKS/
-        gradle build
+        gradle build --warning-mode all
