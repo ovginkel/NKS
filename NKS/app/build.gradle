@@ -1,8 +1,4 @@
-// The first line in this file indicates
-// the Android plugin is applied for Gradle to
-// this build
- 
-apply plugin : 'com.android.application'
+// Model level build.gradle
 
 buildscript {
     repositories {
