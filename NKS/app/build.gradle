@@ -3,27 +3,6 @@
 // this build
  
 apply plugin : 'com.android.application'
- 
-android
-{
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
-    {
-        applicationId "org.iphukan.nks"
-        minSdkVersion 14
-        targetSdkVersion 30
-        versionCode 18
-        versionName "18.0"
-    }
-    buildTypes
-    {
-        release
-        {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
 
 buildscript {
     repositories {
