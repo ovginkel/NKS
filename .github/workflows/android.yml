@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo apt-get update >> log_file 2>&1
         sudo apt-get install --yes openjdk-11-jdk >> log_file 2>&1
-        VERSION=7.3.3
+        VERSION=4.6.1
         wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp >> log_file 2>&1
         sudo unzip -d /opt/gradle /tmp/gradle-${VERSION}-bin.zip >> log_file 2>&1
         export GRADLE_HOME=/opt/gradle/latest 
