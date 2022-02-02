@@ -20,7 +20,7 @@ buildscript {
         //classpath 'com.android.tools.build:gradle:3.5.1'
         //classpath 'com.android.tools.build:gradle:3.2'
         //classpath 'com.android.tools.build:gradle:3.3.0'
-        implementation 'org.reactivestreams:reactive-streams:1.0.3'
+        //implementation 'org.reactivestreams:reactive-streams:1.0.3'
         implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
         // Because RxAndroid releases are few and far between, it is recommended you also
         // explicitly depend on RxJava's latest version for bug fixes and new features.
