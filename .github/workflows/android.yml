@@ -22,7 +22,7 @@ jobs:
         wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp >> log_file 2>&1
         sudo unzip -d /opt/gradle /tmp/gradle-${VERSION}-bin.zip >> log_file 2>&1
         export GRADLE_HOME=/opt/gradle/latest 
-        export PATH=${GRADLE_HOME}/bin:${PATH}
+        export PATH=$GRADLE_HOME/bin:$PATH
         gradle -v
         cd ./NKS/
         gradle build --warning-mode all
