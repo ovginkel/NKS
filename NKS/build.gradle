@@ -18,13 +18,13 @@ dependencyResolutionManagement {
 
 buildscript {
     repositories {
-        maven { url 'https://maven.google.com' }
-        mavenLocal()
-        mavenCentral()
+        //maven { url 'https://maven.google.com' }
+        //mavenLocal()
+        //mavenCentral()
         google()
-        maven { url 'https://www.sparetimelabs.com/maven2' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'https://jitpack.io' }
+        //maven { url 'https://www.sparetimelabs.com/maven2' }
+        //maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        //maven { url 'https://jitpack.io' }
     }
     dependencies {
         //classpath 'com.android.tools.build:gradle:2.3.3'
@@ -32,8 +32,8 @@ buildscript {
         //classpath 'com.android.tools.build:gradle:3.5.1'
         //classpath 'com.android.tools.build:gradle:3.2'
         //classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath 'com.android.tools.build:gradle:6.8.2'
-        //classpath 'com.android.tools.build:gradle:7.1.0'
+        //classpath 'com.android.tools.build:gradle:6.8.2'
+        classpath 'com.android.tools.build:gradle:7.1.0'
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         ///classpath "io.realm:realm-gradle-plugin:5.8.0"
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
@@ -42,13 +42,14 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "https://oss.jfrog.org/libs-snapshot" }
-        maven { url 'https://maven.google.com' }
-        mavenLocal()
-        mavenCentral()
-        maven { url 'https://www.sparetimelabs.com/maven2' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'https://jitpack.io' }
+        google()
+        //maven { url "https://oss.jfrog.org/libs-snapshot" }
+        //maven { url 'https://maven.google.com' }
+        //mavenLocal()
+        //mavenCentral()
+        //maven { url 'https://www.sparetimelabs.com/maven2' }
+        //maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        //maven { url 'https://jitpack.io' }
     }
 }
 
