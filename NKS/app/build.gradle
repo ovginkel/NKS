@@ -18,15 +18,16 @@ buildscript {
         //classpath 'com.android.tools.build:gradle:3.5.1'
         //classpath 'com.android.tools.build:gradle:3.2'
         //classpath 'com.android.tools.build:gradle:3.3.0'
-        //implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-        //implementation 'org.reactivestreams:reactive-streams:1.0.3'
-        //implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+        classpath 'com.android.tools.build:gradle:7.1.0'
+        compile 'io.reactivex.rxjava3:rxjava:3.0.0'
+        compile 'org.reactivestreams:reactive-streams:1.0.3'
+        compile 'io.reactivex.rxjava3:rxandroid:3.0.0'
         // Because RxAndroid releases are few and far between, it is recommended you also
         // explicitly depend on RxJava's latest version for bug fixes and new features.
         // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
         def collection_version = "1.2.0"
         // Java language implementation
-        implementation "androidx.collection:collection:$collection_version"
+        compile "androidx.collection:collection:$collection_version"
         //implementation 'androidx.collection:collection:1.1.0'
         //implementation 'com.android.tools.build:gradle:7.1.0'
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -52,9 +53,9 @@ plugins {
 }
 allprojects {
     repositories {
-        mavenLocal()
-        mavenCentral()
         google()
+        //mavenLocal()
+        mavenCentral()
         /*maven { url "https://dl.bintray.com/lukaville/maven" }*/
         maven { url 'https://maven.google.com' }
         maven { url 'https://www.sparetimelabs.com/maven2' }
