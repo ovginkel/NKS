@@ -22,7 +22,7 @@ jobs:
         wget https://services.gradle.org/distributions/gradle-${VERSION}-bin.zip -P /tmp >> log_file 2>&1
         sudo unzip -d /opt/gradle /tmp/gradle-${VERSION}-bin.zip >> log_file 2>&1
         ls /opt/gradle
-        export GRADLE_HOME=/opt/gradle/latest 
+        export GRADLE_HOME=/opt/gradle/gradle-6.8.2
         export PATH=$GRADLE_HOME/bin:$PATH
         gradle -v
         cd ./NKS/
