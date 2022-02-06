@@ -1,6 +1,6 @@
 // Model level build.gradle
 
-buildscript {i
+buildscript {
     repositories {
         maven { url "https://oss.jfrog.org/libs-snapshot" }
         //maven { url  "http://localhost/maven" }
